@@ -36,8 +36,7 @@ add this line in launch.json
 ```json
 "preLaunchTask": "tsc build - tscongig.json",
 ```
-## 
-2.types
+## 2.types
 ### any
 ```typescript
 let levelL = "typescript"//编译器可自动推断出类型
@@ -309,7 +308,7 @@ button?.addEventListener('click', ()=>{
   console.log('click')
 })
 ```
-####  debug with vscode 
+#### debug with vscode 
 开启sorceMap
 下载debug chrome插件
 ## 4.TypeScript项目
