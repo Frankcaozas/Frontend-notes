@@ -563,3 +563,36 @@ let add:AddFn
 interface 只在编译时生效
 运行时无效
 编译为js后消失（no output）
+
+## Advanced Types
+
+### Intersection
+
+用&表示交集类型
+   | 表示联合
+
+```ts
+type Admin = {
+
+name: string,
+
+privileges: string[]
+
+}
+
+type Emp = {
+
+name: string,
+
+startDate: Date
+
+}
+type ElevatedEmp = Admin & Emp
+```
+
+### Type Guards 
+
+使用联合类型时，需要知道具体使用的是哪种类型
+```ts
+
+```
