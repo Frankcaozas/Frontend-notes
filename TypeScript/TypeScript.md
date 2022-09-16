@@ -593,6 +593,12 @@ type ElevatedEmp = Admin & Emp
 ### Type Guards 
 
 使用联合类型时，需要知道具体使用的是哪种类型
-```ts
 
+```ts
+1.基本类型， *typeof*
+2.对象， *instanceof*  or *in*
+
+注意！
+对 interface 不能用 instance 
+因为 interface 不存在于 runtime
 ```
