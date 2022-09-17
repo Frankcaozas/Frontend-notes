@@ -602,3 +602,32 @@ type ElevatedEmp = Admin & Emp
 对 interface 不能用 instance 
 因为 interface 不存在于 runtime
 ```
+
+### Discriminated Types
+
+discriminated 识别,辨别
+可用于interface
+```ts
+interface Bird {
+  type: 'bird'
+  flySpeed: number
+}
+
+interface Horse{
+  type: 'horse'
+  runningSpeed: number
+}
+
+type Animalv = Bird | Horse
+function moveAnimal(animal: Animalv) {
+  let speed
+  switch (animal.type) {
+    case 'bird':
+      break;
+    case 'horse':
+      break
+    default:
+      break;
+  }
+}
+```
