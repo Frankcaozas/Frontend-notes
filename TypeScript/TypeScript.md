@@ -631,3 +631,33 @@ function moveAnimal(animal: Animalv) {
   }
 }
 ```
+
+### Type Cast
+
+两种写法
+
+
+```ts
+//HTMLElement 没有input对应的属性
+const inputElement = document.querySelector('#id')!
+//1
+const inputElement = <HTMLInputElement>document.querySelector('#id')!
+
+	  
+//2
+const inputElement = document.querySelector('#id')! as
+HTMLInputElement
+inputElement.value = 'hi'```
+
+ ### Index Types
+
+不知道属性的数量和名称
+```ts
+interface ErrorContainer {
+  [prop: string]: string
+}
+
+const error: ErrorContainer = {
+  email: 'zzz',
+  username: 'ssss'
+}```
