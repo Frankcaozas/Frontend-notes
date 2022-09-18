@@ -661,3 +661,10 @@ const error: ErrorContainer = {
   email: 'zzz',
   username: 'ssss'
 }```
+更多用法：https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html
+
+### Function Overload
+
+```ts
+ 
+```
