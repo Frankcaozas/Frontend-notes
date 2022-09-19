@@ -54,8 +54,10 @@ let userinput: unknown
 let username: string
 userinput = 5 
 userinput = 'frankcao'
+
 //报错因为 userinput类型为 unknown， 不知道是string
 //username = userinput
+
 if(typeof userinput === 'string'){
   username = userinput
 }
@@ -666,5 +668,46 @@ const error: ErrorContainer = {
 ### Function Overload
 
 ```ts
- 
+ function add(a: string, b: string): string
+
+function add(a: number, b: number): number
+
+function add(a: Combineable, b: Combineable) {
+
+if(typeof a === 'string' || typeof b ==='string'){
+
+return a.toString() + b.toString()
+
+}
+
+return a+b
+
+}
+
+const res = add(1, 2)
+//编译器自动判断出res的类型
+```
+### Nullish Coalescing
+a ?? b
+如果a为 null 或 undefined 
+值为b
+
+## Generics
+
+### built in generics
+```ts
+const array: Array<number> = []
+
+const promise= new Promise<string>((resolve) => {
+  resolve('s s ss s')
+})
+
+promise.then((data) => {
+  const a = data.split(' ')
+})
+```
+
+### generic function
+```
+
 ```
