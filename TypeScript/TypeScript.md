@@ -649,7 +649,8 @@ const inputElement = <HTMLInputElement>document.querySelector('#id')!
 //2
 const inputElement = document.querySelector('#id')! as
 HTMLInputElement
-inputElement.value = 'hi'```
+inputElement.value = 'hi'
+```
 
  ### Index Types
 
@@ -662,7 +663,8 @@ interface ErrorContainer {
 const error: ErrorContainer = {
   email: 'zzz',
   username: 'ssss'
-}```
+}
+```
 更多用法：https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html
 
 ### Function Overload
@@ -723,3 +725,20 @@ const mergeObj = merge(
 )
 merge<string, number>('aaa',123)
 ```
+
+### constrains
+(泛型约束)
+1.extends
+
+```ts
+function merge<T extends object, U extends object>(objA: T, objB: U) {
+  
+}
+
+```
+
+2.keyof
+```ts
+function extractAndConvert<T extends object,U extends keyof T>(obj: T, key: U ){
+  return obj[key]
+}  ```
