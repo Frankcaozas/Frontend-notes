@@ -767,3 +767,60 @@ class Person{
 decorator在类定义时执行，而不是在类实例化时
 
 #### Decorator Factory(如何传参)
+
+```ts
+const WithTemplate = (logString: string)=>{
+  return function (target: object) {
+    console.log(logString)
+    console.log(target)
+    //this is the template pass in
+	//[class Person]
+  }
+}
+
+@WithTemplate('this is the template pass in')
+class Person{
+  constructor(public name: string) {
+    console.log('creating preson' + this.name)
+  }
+}
+```
+
+#### Multiple Decorators
+
+*可以添加多个装饰器* 
+执行顺序：
+	工厂函数自下而上
+	外部的自上而下
+
+```ts
+function Logger(str: string){
+  console.log('logger factory')
+  return (constructor: Function )=>{
+    console.log(constructor + str)
+  }
+
+}
+
+const WithTemplate = (logString: string)=>{
+  console.log('WithTemplate factory')
+  return function (target: object) {
+    console.log(logString)
+    console.log(target)
+  }
+}
+@Logger('logger str')
+@WithTemplate('this is the template pass in')
+class Person{
+  constructor(public name: string) {
+    console.log('creating preson' + this.name)
+  }
+}
+
+结果
+1.logger factory
+2.WithTemplate factory
+3.this is the template pass in
+[class Person]
+4. constructor + logger str 
+```
