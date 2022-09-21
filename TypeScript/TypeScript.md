@@ -534,7 +534,7 @@ class AccountingDepartment extends Department {
   }
 }
 ```
-### Interface
+## 6.Interface
 和 custom types 的区别：
 1.自定义类型更灵活，比如union(联合类型）
 2.interface更清晰，只能用于定义类的结构
@@ -566,7 +566,7 @@ interface 只在编译时生效
 运行时无效
 编译为js后消失（no output）
 
-## Advanced Types
+## 7.Advanced Types
 
 ### Intersection
 
@@ -694,7 +694,7 @@ a ?? b
 如果a为 null 或 undefined 
 值为b
 
-## Generics
+## 8.Generics
 
 ### built in generics
 ```ts
@@ -741,4 +741,27 @@ function merge<T extends object, U extends object>(objA: T, objB: U) {
 ```ts
 function extractAndConvert<T extends object,U extends keyof T>(obj: T, key: U ){
   return obj[key]
-}  ```
+}  
+```
+
+## 9.Decorator
+
+tsconfig要求
+```json
+"target": "es2016",
+"noUnusedParameters": true
+```
+
+```ts
+function Logger(target: Function){
+  console.log(target)
+}
+
+@Logger
+class Person{
+  constructor(public name: string) {
+    console.log('creating preson' + this.name)
+  }
+}```
+decorator在类定义时执行，而不是在类实例化时
+
