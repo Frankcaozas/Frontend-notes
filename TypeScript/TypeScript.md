@@ -768,6 +768,7 @@ decorator在类定义时执行，而不是在类实例化时
 
 #### Decorator Factory(如何传参)
 
+修饰类
 ```ts
 const WithTemplate = (logString: string)=>{
   return function (target: object) {
