@@ -746,7 +746,7 @@ function extractAndConvert<T extends object,U extends keyof T>(obj: T, key: U ){
 
 ## 9.Decorator
 
-tsconfig要求
+#### tsconfig要求
 ```json
 "target": "es2016",
 "noUnusedParameters": true
@@ -762,6 +762,8 @@ class Person{
   constructor(public name: string) {
     console.log('creating preson' + this.name)
   }
-}```
+}
+```
 decorator在类定义时执行，而不是在类实例化时
 
+#### Decorator Factory(如何传参)
