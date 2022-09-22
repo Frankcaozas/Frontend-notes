@@ -854,4 +854,34 @@ function WithTemplate(template: string, hookId: string) {
 }
 ```
 
-##### 2.
+##### 2. Return Descriptor
+method or accessor
+加在方法或者是getter setter上 返回一个新的descriptor
+
+```ts
+function AutoBind(_1: any, _2: string, descriptor: PropertyDescriptor):PropertyDescriptor{
+  const originFunc = descriptor.value
+  const newDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    
+    在新的getter中绑定this
+    get(){
+      return originFunc.bind(this)
+    }
+  }
+  return newDescriptor
+}
+class Printer {
+  message =  'This Works!';
+  
+  @AutoBind
+  showMessage (){
+    console.log(this.message)
+  }
+}
+
+const printer = new Printer()
+const buttona = document.querySelector('button')!
+buttona.addEventListener('click', printer.showMessage)
+```
