@@ -825,3 +825,33 @@ class Person{
 [class Person]
 4. constructor + logger str 
 ```
+
+#### 修饰符位置
+https://www.typescriptlang.org/docs/handbook/decorators.html#decorator-composition
+
+#### Decorator return Type
+##### 1.return 一个新的类 
+*加在类上时*
+覆盖原有的constructor， 可以在new 这个类时执行相应的逻辑
+```ts
+function WithTemplate(template: string, hookId: string) {
+  console.log('TEMPLATE FACTORY');
+  return function<T extends { new (...args: any[]): {name: string} }>(
+    originalConstructor: T
+  ) {
+    return class extends originalConstructor {
+      constructor(..._: any[]) {
+        super();
+        console.log('Rendering template');
+        const hookEl = document.getElementById(hookId);
+        if (hookEl) {
+          hookEl.innerHTML = template;
+          hookEl.querySelector('h1')!.textContent = this.name;
+        }
+      }
+    };
+  };
+}
+```
+
+##### 2.
