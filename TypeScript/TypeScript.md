@@ -885,3 +885,87 @@ const printer = new Printer()
 const buttona = document.querySelector('button')!
 buttona.addEventListener('click', printer.showMessage)
 ```
+
+#### 实现Validator
+
+```ts
+
+interface ValidatorConfig {
+  [property: string]: {
+    [validatableProp: string]: string[]; // ['required', 'positive']
+  };
+}
+
+const registeredValidators: ValidatorConfig = {};
+
+function Required(target: any, name: string){
+  registeredValidators[target.constructor.name] ={
+    ...registeredValidators[target.constructor.name],
+     [name]: ['require']
+  }
+}
+
+function PositiveNumber(target: any, name: string){
+  registeredValidators[target.constructor.name] ={
+    ...registeredValidators[target.constructor.name],
+     [name]: ['positive']
+  }
+}
+
+const validate = (obj: any):boolean =>{
+  const config = registeredValidators[obj.constructor.name]
+  for(const validator in config){
+    for(const validatorName of config[validator]){
+      switch (validatorName) {
+        case 'require':
+          console.log('require')
+          if(!obj[validator]){
+            return false
+          }
+          break;
+        case 'positive':
+          console.log('positive')
+          if(obj[validator]<=0){
+            return false
+          }
+          break
+        default:
+          break;
+      }
+    }
+  }
+  return true
+}
+
+class Course {
+  @Required
+  title: string;
+  @PositiveNumber
+  price: number;
+
+  constructor(t: string, p: number) {
+    this.title = t;
+    this.price = p;
+  }
+}
+
+const courseForm = document.querySelector('form')!;
+courseForm.addEventListener('submit', event => {
+  event.preventDefault();
+  const titleEl = document.getElementById('title') as HTMLInputElement;
+  const priceEl = document.getElementById('price') as HTMLInputElement;
+
+  const title = titleEl.value;
+  const price = +priceEl.value;
+
+  const createdCourse = new Course(title, price);
+
+  if (!validate(createdCourse)) {
+    alert('Invalid input, please try again!');
+    return;
+  }
+  console.log(createdCourse);
+})
+```
+
+###
