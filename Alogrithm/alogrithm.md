@@ -1621,3 +1621,60 @@ function compareTree(tree1: TreeNode | null, tree2: TreeNode | null): boolean{
   return compareTree(tree1.left, tree2.left) && compareTree(tree1.right, tree2.right)
 }
 ```
+
+###  [剑指 Offer 27. 二叉树的镜像](https://leetcode.cn/problems/er-cha-shu-de-jing-xiang-lcof/)
+```ts
+function mirrorTree(root: TreeNode | null): TreeNode | null {
+  function swap(node: TreeNode | null): void{
+    if(!node) return
+    const temp = node.left
+    node.left = node.right
+    node.right = temp
+    swap(node.left)
+    swap(node.right)
+  }
+  
+  if(!root) return null
+  swap(root)
+  return root
+}
+```
+
+### [剑指 Offer 30. 包含min函数的栈](https://leetcode.cn/problems/bao-han-minhan-shu-de-zhan-lcof/)
+```ts
+class MinStack {
+  private arr: number[] = []
+  private minArr: number[] = []
+  constructor() {}
+
+  push(x: number): void {
+    const minArr = this.minArr
+    this.arr.push(x)
+    if (minArr.length > 0) {
+      if (x <= minArr[minArr.length - 1]) {
+        minArr.push(x)
+      }
+    } else {
+      this.minArr.push(x)
+    }
+  }
+
+  pop(): void {
+    if (this.arr.length >= 1) {
+      const minArr = this.minArr
+      const x = this.arr.pop()
+      if(x === minArr[minArr.length-1] ){
+          minArr.pop()
+      }
+    }
+  }
+
+  top(): number {
+    return this.arr[this.arr.length - 1]
+  }
+
+  min(): number {
+    return this.minArr[this.minArr.length - 1]
+  }
+}
+```
