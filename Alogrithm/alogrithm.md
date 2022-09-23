@@ -1640,6 +1640,24 @@ function mirrorTree(root: TreeNode | null): TreeNode | null {
 }
 ```
 
+###  [剑指 Offer 28. 对称的二叉树](https://leetcode.cn/problems/dui-cheng-de-er-cha-shu-lcof/)
+
+注意root为 *null* 时返回 true
+```ts
+function isSymmetric(root: TreeNode | null): boolean {
+    if(!root) return true
+    return checkNode(root?.left, root?.right)
+
+}
+function checkNode(a: TreeNode | null, b: TreeNode | null) {
+    if (a === null && b === null) return true
+    if (a === null || b === null) return false
+    if (a.val != b.val) return false
+
+    return checkNode(a.left, b.right) && checkNode(a.right, b.left)
+}
+```
+
 ### [剑指 Offer 30. 包含min函数的栈](https://leetcode.cn/problems/bao-han-minhan-shu-de-zhan-lcof/)
 ```ts
 class MinStack {
