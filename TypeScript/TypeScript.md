@@ -1148,10 +1148,24 @@ button:active {
 
 app.ts
 ```ts
+function AutoBind(_: any, _2: string, descriptor: PropertyDescriptor){
+  const originMethod:Function = descriptor.value
+  descriptor = {
+    configurable:true,
+    get() {
+      return originMethod.bind(this)
+    },
+  }
+  return descriptor
+}
+
 class ProjectInput {
   templateElment: HTMLTemplateElement
   hostElement: HTMLDivElement
   inputElements: HTMLFormElement
+  titleInputElement: HTMLInputElement;
+  descriptionInputElement: HTMLInputElement;
+  peopleInputElement: HTMLInputElement;
 
   constructor(){
     this.templateElment = document.querySelector('#project-input')! as HTMLTemplateElement
@@ -1159,7 +1173,29 @@ class ProjectInput {
     const importNode = document.importNode(this.templateElment.content, true) 
     this.inputElements = importNode.firstElementChild as HTMLFormElement
     this.inputElements.id = 'user-input'
+    
+
+    this.titleInputElement = this.inputElements.querySelector(
+      '#title'
+    ) as HTMLInputElement;
+    this.descriptionInputElement = this.inputElements.querySelector(
+      '#description'
+    ) as HTMLInputElement;
+    this.peopleInputElement = this.inputElements.querySelector(
+      '#people'
+    ) as HTMLInputElement;
     this.attach()
+    this.configure()
+  }
+
+  @AutoBind
+  private submitHandler(event: Event) {
+    event.preventDefault();
+    console.log(this.titleInputElement.value);
+  }
+
+  private configure() {
+    this.inputElements.addEventListener('submit', this.submitHandler);
   }
 
   private attach(){
@@ -1168,4 +1204,5 @@ class ProjectInput {
 }
 
 const input = new ProjectInput()
+
 ```
