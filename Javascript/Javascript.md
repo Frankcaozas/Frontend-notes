@@ -54,10 +54,22 @@ DragEvent.DataTransfer
 ```ts
 Used to hold the data that is being dragged during a drag and drop operation. It may hold one or more data items, each of one or more data types. For more information about drag and drop, see HTML Drag and Drop API
 存储拖拽时需要的数据
-setData（
+
+setData(format: string, data: string): void;
+getData(format: string): string;
+clearData(format?: string): void;
 ```
 
-(property) DataTransfer.effectAllowed
+DataTransfer.types
+```ts
+//定义:
+readonly types: ReadonlyArray<string>;
+
+存储dataTransfer中保存的数据的类型，有文件时有'Files'
+
+```
+
+DataTransfer.effectAllowed
 ```ts
 (property) DataTransfer.effectAllowed: "link" | "copy" | "none" | "copyLink" | "copyMove" | "linkMove" | "move" | "all" | "uninitialized"
 Returns the kinds of operations that are to be allowed.
