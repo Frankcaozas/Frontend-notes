@@ -305,6 +305,30 @@ class Solution {
 }
 ```
 
+## 图
+### [797. 所有可能的路径](https://leetcode.cn/problems/all-paths-from-source-to-target/)
+```ts
+function allPathsSourceTarget(graph: number[][]): number[][] {
+    const path = []
+    const ans = [] 
+    
+    const dfs = (x: number) => {
+        path.push(x)
+        if(x === graph.length-1){
+            ans.push(path.slice())//复制一个path
+        }
+        for(const next of graph[x]){
+            dfs(next)
+        }
+        path.pop()//把节点删掉
+    }
+
+    dfs(0)
+    return ans
+};
+```
+
+
 ## 2.动态规划
 
 教学：[https://cloud.tencent.com/developer/article/1817113](https://cloud.tencent.com/developer/article/1817113)
