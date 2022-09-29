@@ -222,11 +222,8 @@ class Solution {
 
 **return 用&&连接两个dfs**
 
-### 将有序数组转换为平衡二叉树
 
-给你一个整数数组 nums ，其中元素已经按 升序 排列，请你将其转换为一棵 高度平衡 二叉搜索树。
-
-高度平衡 二叉树是一棵满足「每个节点的左右两个子树的高度差的绝对值不超过 1 」的二叉树。
+### [108. 将有序数组转换为二叉搜索树](https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/)
 
 ```java
 class Solution {
@@ -243,16 +240,9 @@ class Solution {
 }
 ```
 
+
+
 ### [230. 二叉搜索树中第K小的元素](https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/)
-
-给定一个二叉搜索树的根节点 `root` ，和一个整数 `k` ，请你设计一个算法查找其中第 `k` 个最小元素（从 1 开始计数）。
-
-![](https://assets.leetcode.com/uploads/2021/01/28/kthtree1.jpg#crop=0&crop=0&crop=1&crop=1&id=HUTfY&originHeight=301&originWidth=212&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
-
-```
-输入：root = [3,1,4,null,2], k = 1
-输出：1
-```
 
 ```java
 class Solution {
@@ -277,19 +267,9 @@ class Solution {
 }
 ```
 
+
+
 ### [236. 二叉树的最近公共祖先](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/)
-
-给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
-
-百度百科中最近公共祖先的定义为：“对于有根树 T 的两个节点 p、q，最近公共祖先表示为一个节点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
-
-示例 1：
-
-![](https://assets.leetcode.com/uploads/2018/12/14/binarytree.png#crop=0&crop=0&crop=1&crop=1&id=Atvql&originHeight=190&originWidth=200&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
-
-输入：root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
-输出：3
-解释：节点 5 和节点 1 的最近公共祖先是节点 3 。
 
 ```java
 class Solution {
@@ -305,7 +285,6 @@ class Solution {
 }
 ```
 
-## 图
 ### [797. 所有可能的路径](https://leetcode.cn/problems/all-paths-from-source-to-target/)
 ```ts
 function allPathsSourceTarget(graph: number[][]): number[][] {
@@ -327,6 +306,28 @@ function allPathsSourceTarget(graph: number[][]): number[][] {
     return ans
 };
 ```
+
+//优化版,next指针简化连接过程
+```ts
+
+function connect(root: Node | null): Node | null {
+  if (root === null) return root
+  let levelLeft = root
+  while(levelLeft.left != null){
+    let head = levelLeft
+    while(head !=null){
+      head.left.next = head.right
+      if(head.next)
+        head.right.next = head.next.left
+      head = head.next
+    }
+    levelLeft = levelLeft.left
+  }
+  return root
+}
+```
+
+## 图
 
 
 ## 2.动态规划
