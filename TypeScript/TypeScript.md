@@ -195,7 +195,7 @@ tsc --watch
     //不可指定文件夹
   ]
 ```
-```typescript
+```json
 {
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
@@ -302,6 +302,7 @@ tsc --watch
   // ]
 }
 ```
+
 ```typescript
 //开启strictNullChecks
 // const button = document.querySelector('button')！
@@ -326,8 +327,9 @@ let foo: Foo;
 let bar: Bar;
 let bas: Bas;
 ```
+
 interface 不能用来做变量, 没有声明在变量空间中
-```javascript
+```typescript
 interface Bar {}
 const bar = Bar; // Error: "cannot find name 'Bar'"
 ```
@@ -341,6 +343,7 @@ const someOtherVar = 123;
 ### 模块
 #### 全局模块
 在默认情况下，当你开始在一个新的 TypeScript 文件中写下代码时，它处于全局命名空间中。如在 foo.ts 里的以下代码。
+
 ```typescript
 const foo = 123;
 const bar = foo; // allowed
