@@ -974,4 +974,8 @@ courseForm.addEventListener('submit', event => {
 ## 10. ts with 3rd libs
 
 ### javascript lib
-需要引入type/..
+需要引入 @type/pakageName
+
+### Declare
+声明已有但ts不知道的变量或类型
+
