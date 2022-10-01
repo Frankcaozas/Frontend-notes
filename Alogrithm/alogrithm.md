@@ -328,7 +328,62 @@ function connect(root: Node | null): Node | null {
 ```
 
 ## 图
+### [207. 课程表](https://leetcode.cn/problems/course-schedule/)
+类型:判断图中是否有环
+```ts
+function canFinish(numCourses: number, prerequisites: number[][]): boolean {
+  const graph: number[][] = []
+  for(let i=0; i<numCourses; i++){
+    graph.push([])
+  }
+  for(const req of prerequisites){
+    graph[req[1]].push(req[0])
+  }
+// 借助一个标志列表 visited，用于判断每个节点 i （课程）的状态：
+// 未被 DFS 访问：i == 0；
+// 已被其他节点启动的 DFS 访问：i == -1；
+// 已被当前节点启动的 DFS 访问：i == 1。
+  const visited = new Array(numCourses).fill(0)
+  
+  const dfs = (num: number)=>{
+    if(visited[num] === 1) return false
+    if(visited[num] === -1) return true
+    visited[num] = 1
+    for(const nighbor of graph[num]){
+      if(!dfs(nighbor)) return false
+    }
+    visited[num] = -1
+    return true
+  }
+  
+  for(let i=0; i<numCourses; i++){
+    if(!dfs(i)) return false
+  }
+  return true
+};
+```
+### [797. 所有可能的路径](https://leetcode.cn/problems/all-paths-from-source-to-target/)
+类型：图的遍历
+```typescript
+function allPathsSourceTarget(graph: number[][]): number[][] {
+  const path: number[] = []
+  const ans: number[][]  = [] 
+  
+  const dfs = (x: number) => {
+      path.push(x)
+      if(x === graph.length-1){
+          ans.push(path.slice())
+      }
+      for(const next of graph[x]){
+          dfs(next)
+      }
+      path.pop()
+  }
 
+  dfs(0)
+  return ans
+};
+```
 
 ## 2.动态规划
 
