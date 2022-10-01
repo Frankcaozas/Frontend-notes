@@ -970,3 +970,8 @@ courseForm.addEventListener('submit', event => {
   console.log(createdCourse);
 })
 ```
+
+## 10. ts with 3rd libs
+
+### javascript lib
+需要引入type/..
