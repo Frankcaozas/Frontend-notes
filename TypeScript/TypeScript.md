@@ -979,3 +979,5 @@ courseForm.addEventListener('submit', event => {
 ### Declare
 声明已有但ts不知道的变量或类型
 
+## 11. TS with React
+
