@@ -981,3 +981,50 @@ courseForm.addEventListener('submit', event => {
 
 ## 11. TS with React
 
+### FunctionComponent
+
+```ts
+const App: React.FC = () => {
+	return (...)
+}
+```
+
+### Types For Props
+
+*app.ts*
+```ts
+const TodoListData  = [
+  {
+    id: 1,
+    title: '读诡秘之主',
+    time: 60
+  }
+]
+
+const App: React.FC= ()=>{
+  return (
+      <TodoList items={TodoListData}></TodoList>
+  )
+}
+```
+
+*TodoList.ts*
+React.FC<>  泛型类型 定义传入的props
+```ts
+interface TodoListProps {
+  items: { id: number; title: string; time: number }[]
+}
+
+const TodoList: React.FC<TodoListProps> = (props) => {
+  
+  return (
+    <div>
+      {props.items.map((item) => (
+        <li key={item.id}>
+          {item.title + ' ' + item.time}
+        </li>
+      ))}
+    </div>
+  )
+}
+```
