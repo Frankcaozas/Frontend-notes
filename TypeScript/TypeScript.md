@@ -1028,3 +1028,24 @@ const TodoList: React.FC<TodoListProps> = (props) => {
   )
 }
 ```
+
+### UseRef<>
+传入对应dom对象的类型
+```ts
+const NewTodo: React.FC = () => {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const submitHandler = (e: React.FormEvent)=>{
+    e.preventDefault()
+    console.log(inputRef.current?.value)
+  }
+  return (
+    <form onSubmit={submitHandler}>
+      <label htmlFor="inputText"></label>
+      <input 
+	      type="text" 
+	      id="inputText" 
+      ref={inputRef} />
+    </form>
+  )
+}
+```
