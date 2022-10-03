@@ -327,8 +327,69 @@ function connect(root: Node | null): Node | null {
 }
 ```
 
-## 图
-### [207. 课程表](https://leetcode.cn/problems/course-schedule/)
+## 1.1图
+### 存储方式
+1.邻接表
+```ts
+const graph = [
+0 [4,3,1],
+1 [3,2,4],
+2 [3],
+3 [4],
+4 []
+]
+```
+
+2.邻接矩阵
+```ts
+//若有权则存储具体值
+const graph = [
+[0,1,0,1,1]
+[0,0,1,1,1]
+[0,0,0,1,0]
+[0,0,0,0,1]
+[0,0,0,0,0]
+]
+```
+优劣：
+邻接表占用空间少，但无法快速判断节点是否相邻，需要遍历
+邻接矩阵占用空间多，可快速判断
+
+*PS：在常规的算法题中，邻接表的使用会更频繁一些，主要是因为操作起来较为简单，但这不意味着邻接矩阵应该被轻视。矩阵是一个强有力的数学工具，图的一些隐晦性质可以借助精妙的矩阵运算展现出来。*
+
+### 图的遍历
+用visited记录节点状态
+1 为在路径上，搜索未完成，
+-1 为已搜索完的
+0 为还未搜索s'j's
+```ts
+
+```
+#### [797. 所有可能的路径](https://leetcode.cn/problems/all-paths-from-source-to-target/)
+类型：图的遍历
+```typescript
+function allPathsSourceTarget(graph: number[][]): number[][] {
+  const path: number[] = []
+  const ans: number[][]  = [] 
+  
+  const dfs = (x: number) => {
+      path.push(x)
+      if(x === graph.length-1){
+          ans.push(path.slice())
+      }
+      for(const next of graph[x]){
+          dfs(next)
+      }
+      path.pop()
+  }
+
+  dfs(0)
+  return ans
+};
+```
+
+### 环检测和拓扑排序
+#### [207. 课程表](https://leetcode.cn/problems/course-schedule/)
 类型:判断图中是否有环
 ```ts
 function canFinish(numCourses: number, prerequisites: number[][]): boolean {
@@ -360,28 +421,6 @@ function canFinish(numCourses: number, prerequisites: number[][]): boolean {
     if(!dfs(i)) return false
   }
   return true
-};
-```
-### [797. 所有可能的路径](https://leetcode.cn/problems/all-paths-from-source-to-target/)
-类型：图的遍历
-```typescript
-function allPathsSourceTarget(graph: number[][]): number[][] {
-  const path: number[] = []
-  const ans: number[][]  = [] 
-  
-  const dfs = (x: number) => {
-      path.push(x)
-      if(x === graph.length-1){
-          ans.push(path.slice())
-      }
-      for(const next of graph[x]){
-          dfs(next)
-      }
-      path.pop()
-  }
-
-  dfs(0)
-  return ans
 };
 ```
 
