@@ -363,7 +363,24 @@ const graph = [
 -1 为已搜索完的
 0 为还未搜索s
 ```ts
+function traverseGraph(graph: number[][], num: number) {
+  const visited: number[]  = [] 
+  
+  const dfs = (x: number) => {
+	  //前序位置
+      visited[x] = 1
+      for(const nighbor of graph[x]){
+          dfs(next)
+      }
+      //后序位置
+      visited[x] = -1
+  }
 
+  for(let i=0; i<num; i++){
+	  dfs(i)
+  }
+  
+};
 ```
 #### [797. 所有可能的路径](https://leetcode.cn/problems/all-paths-from-source-to-target/)
 类型：图的遍历
@@ -377,7 +394,7 @@ function allPathsSourceTarget(graph: number[][]): number[][] {
       if(x === graph.length-1){
           ans.push(path.slice())
       }
-      for(const next of graph[x]){
+      for(const nighbor of graph[x]){
           dfs(next)
       }
       path.pop()
