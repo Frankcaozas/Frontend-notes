@@ -405,11 +405,12 @@ function allPathsSourceTarget(graph: number[][]): number[][] {
 };
 ```
 
-### 环检测和拓扑排序
+### 环检测
 #### [207. 课程表](https://leetcode.cn/problems/course-schedule/)
 类型:判断图中是否有环
 ```ts
 function canFinish(numCourses: number, prerequisites: number[][]): boolean {
+//构建图的邻接表
   const graph: number[][] = []
   for(let i=0; i<numCourses; i++){
     graph.push([])
@@ -440,7 +441,39 @@ function canFinish(numCourses: number, prerequisites: number[][]): boolean {
   return true
 };
 ```
-
+### 拓扑排序
+#### [210. 课程表 II](https://leetcode.cn/problems/course-schedule-ii/)
+```ts
+function findOrder(numCourses: number, prerequisites: number[][]): number[] {
+//构建图的邻接表
+    const graph: number[][] = []
+    for (let i = 0; i < numCourses; i++) {
+        graph.push([])
+    }
+    for (const req of prerequisites) {
+        graph[req[1]].push(req[0])
+    }
+    const path = []
+    const visited = []
+    let cycle = false
+    const dfs = (num: number) => {
+        if(visited[num] === -1) return
+        if(visited[num] === 1) {
+            cycle = true
+            return 
+        }
+        visited[num] = 1
+        for (const neighbor of graph[num]){
+            dfs(neighbor)
+        }
+        visited[num] = -1
+        path.push(num)
+    }
+    for(let i=0; i<numCourses; i++){
+        dfs(i)
+    }
+    return cycle ? [] : path.reverse()
+};```
 ## 2.动态规划
 
 教学：[https://cloud.tencent.com/developer/article/1817113](https://cloud.tencent.com/developer/article/1817113)
