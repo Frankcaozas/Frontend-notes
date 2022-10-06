@@ -407,17 +407,23 @@ function allPathsSourceTarget(graph: number[][]): number[][] {
 
 ### 环检测
 #### [207. 课程表](https://leetcode.cn/problems/course-schedule/)
-类型:判断图中是否有环
+1.DFS
 ```ts
+const buildGraph = (numCourses: number, prerequisites: number[][]){
+	for (let i = 0; i < numCourses; i++) {
+        graph.push([])
+    }
+    for (const req of prerequisites) {
+        graph[req[1]].push(req[0])
+    }
+}
+
+
 function canFinish(numCourses: number, prerequisites: number[][]): boolean {
+
 //构建图的邻接表
-  const graph: number[][] = []
-  for(let i=0; i<numCourses; i++){
-    graph.push([])
-  }
-  for(const req of prerequisites){
-    graph[req[1]].push(req[0])
-  }
+  const graph: number[][] = buildGraph(numCourses: number, prerequisites: number[][])
+  
 // 借助一个标志列表 visited，用于判断每个节点 i （课程）的状态：
 // 未被 DFS 访问：i == 0；
 // 已被其他节点启动的 DFS 访问：i == -1；
@@ -441,18 +447,65 @@ function canFinish(numCourses: number, prerequisites: number[][]): boolean {
   return true
 };
 ```
+
+2.BFS
+用一个数组记录入度
+将入度为0的压入队列
+```java
+public int[] findOrder(int numCourses, int[][] prerequisites) {
+    // 建图，和环检测算法相同
+    List<Integer>[] graph = buildGraph(numCourses, prerequisites);
+    // 计算入度，和环检测算法相同
+    int[] indegree = new int[numCourses];
+    for (int[] edge : prerequisites) {
+        int from = edge[1], to = edge[0];
+        indegree[to]++;
+    }
+
+    // 根据入度初始化队列中的节点，和环检测算法相同
+    Queue<Integer> q = new LinkedList<>();
+    for (int i = 0; i < numCourses; i++) {
+        if (indegree[i] == 0) {
+            q.offer(i);
+        }
+    }
+
+    // 记录拓扑排序结果
+    int[] res = new int[numCourses];
+    // 记录遍历节点的顺序（索引）
+    int count = 0;
+    // 开始执行 BFS 算法
+    while (!q.isEmpty()) {
+        int cur = q.poll();
+        // 弹出节点的顺序即为拓扑排序结果
+        res[count] = cur;
+        count++;
+        for (int next : graph[cur]) {
+            indegree[next]--;
+            if (indegree[next] == 0) {
+                q.offer(next);
+            }
+        }
+    }
+
+    if (count != numCourses) {
+        // 存在环，拓扑排序不存在
+        return new int[]{};
+    }
+    
+    return res;
+}
+}```
+
+
 ### 拓扑排序
 #### [210. 课程表 II](https://leetcode.cn/problems/course-schedule-ii/)
 ```ts
 function findOrder(numCourses: number, prerequisites: number[][]): number[] {
-//构建图的邻接表
-    const graph: number[][] = []
-    for (let i = 0; i < numCourses; i++) {
-        graph.push([])
-    }
-    for (const req of prerequisites) {
-        graph[req[1]].push(req[0])
-    }
+
+	//buildGraph函数见上文
+    const graph: number[][] = buildGraph(numCourses: number, prerequisites: number[][])
+    
     const path = []
     const visited = []
     let cycle = false
