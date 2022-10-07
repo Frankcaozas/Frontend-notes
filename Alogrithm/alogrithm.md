@@ -1028,6 +1028,26 @@ class Solution {
 }
 ```
 
+### [2. 两数相加](https://leetcode.cn/problems/add-two-numbers/)
+```ts
+function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | null {
+  const ans  = new ListNode()
+  let cur  = ans
+  let cnt = 0
+  while(l1 !=null || l2!=null){
+	//如果为节点空则记录值为0
+    const n1 = l1 ? l1.val : 0
+    const n2 = l2 ? l2.val : 0
+    cur.next = new ListNode((n1+n2+cnt)%10)
+    cnt = Math.floor((n1+n2+cnt)/10)
+    if(l1) l1 = l1.next
+    if(l2) l2 = l2.next
+    cur = cur.next
+  }
+  if(cnt>0) cur.next = new ListNode(cnt)
+  return ans.next
+};```
+
 ### 138.复制带随机指针的链表
 
 给你一个长度为 n 的链表，每个节点包含一个额外增加的随机指针 random ，该指针可以指向链表中的任何节点或空节点。
