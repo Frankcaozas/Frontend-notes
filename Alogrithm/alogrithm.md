@@ -1554,7 +1554,51 @@ function firstUniqChar(s: string): number {
 
   }
 ```
+### [1694. 重新格式化电话号码](https://leetcode.cn/problems/reformat-phone-number/)
+1.用silce分割，每次在结尾加上 '-'
+```ts
+function reformatNumber(number: string): string {
+  const processedNum = number.replace(/[- ]/g, '')
+  
+  let ans: string = ''
+  let i = 0
+  for (i = 0; i < processedNum.length - 4; i += 3) {
+    ans = ans + processedNum.slice(i, i+3) + '-'
+  }
+let x = processedNum.length-i
+  if (x === 3) {
+    ans = ans + processedNum.slice(i, i+3) 
+  } else {
+    if(x === 4){
+        ans = ans + processedNum.slice(i, i+2) + '-' + processedNum.slice(i+2, i+4)
+    }else{
+        ans = ans + processedNum.slice(i, i+2)
+    }
+  }
+  return ans
+}```
+2.将每段字符串存入数组， 最后用join('-')连接
+```ts
+function reformatNumber(number: string): string {
+    const s: string = number.replace(/[- ]/g, ''), 
+    n: number = s.length, 
+    ans: Array<string> = []
+    let idx: number = 0
+    for (; idx < n - 4; idx += 3) {
+        ans.push(s.substr(idx, 3))
+    }
+    if (idx == n - 4) {
+        ans.push(s.substr(idx, 2))
+        idx += 2
+    }
+    ans.push(s.substring(idx, n))
+    return ans.join("-")
+};
 
+作者：himymBen
+链接：https://leetcode.cn/problems/reformat-phone-number/solution/pythonjavatypescriptgo-by-himymben-3mob/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。```
 ## 7.哈希与映射
 
 ### [171. Excel 表列序号](https://leetcode-cn.com/problems/excel-sheet-column-number/)
