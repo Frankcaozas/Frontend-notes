@@ -1661,17 +1661,15 @@ public int maxArea(int[] height) {
         return ans;
     }
 ```
+### [15. 三数之和](https://leetcode.cn/problems/3sum/)
+思路：先将数组排序保证a，b，c不重复
+传统做法 三重循环
+优化：当a固定 a + b1 + c1 = 0 a + b2 + c2 = 0
+b2  > b1  c2 < c1 
+所以b往右移动，c往左移动， 可使用双指针
+
 
 ### [26. 删除有序数组中的重复项](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/)
-
-给你一个 升序排列 的数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。
-
-由于在某些语言中不能改变数组的长度，所以必须将结果放在数组nums的第一部分。更规范地说，如果在删除重复项之后有 k 个元素，那么 nums 的前 k 个元素应该保存最终结果。
-
-将最终结果插入 nums 的前 k 个位置后返回 k 。
-
-不要使用额外的空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。
-
 ```java
 public int removeDuplicates(int[] nums) {
         if(nums.length==0 || nums.length==1) return nums.length;
@@ -1692,27 +1690,7 @@ public int removeDuplicates(int[] nums) {
 
 ### [128. 最长连续序列](https://leetcode-cn.com/problems/longest-consecutive-sequence/)
 
-给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。
-
-请你设计并实现时间复杂度为 O(n) 的算法解决此问题。
-
-示例 1：
-
-```
-输入：nums = [100,4,200,1,3,2]
-输出：4
-```
-
-解释：最长数字连续序列是 [1, 2, 3, 4]。它的长度为 4。
-示例 2：
-
-```
-输入：nums = [0,3,7,2,5,8,4,6,0,1]
-输出：9
-```
-
 哈希表
-
 ```java
 public int longestConsecutive(int[] nums) {
         if(nums.length==0) return 0;
