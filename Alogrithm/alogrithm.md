@@ -1667,6 +1667,28 @@ public int maxArea(int[] height) {
 优化：当a固定 a + b1 + c1 = 0 a + b2 + c2 = 0
 b2  > b1  c2 < c1 
 所以b往右移动，c往左移动， 可使用双指针
+```ts
+function threeSum(nums: number[]): number[][] {
+    const threeSumRes: number[][] = []
+    const sorted = nums.sort((a: number,b: number)=> a-b)
+    for (let i = 0; i < nums.length - 2; i++) {
+        const a = sorted[i]
+        if(i>0 && a===sorted[i-1]) continue
+        let left = i + 1
+        let right = nums.length - 1
+        for (; left < nums.length - 1; left++) {
+            const b = sorted[left]
+            if (left > i + 1 && b === sorted[left-1]) continue
+            while (right > left && sorted[right] + a + b > 0) {
+                right--
+            }
+            if(left === right) break
+            if (sorted[right] + a + b === 0) threeSumRes.push( [a, b,sorted[right]])
+        }
+    }
+    return threeSumRes
+}
+```
 
 
 ### [26. 删除有序数组中的重复项](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/)
