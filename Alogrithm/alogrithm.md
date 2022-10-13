@@ -526,7 +526,9 @@ function findOrder(numCourses: number, prerequisites: number[][]): number[] {
         dfs(i)
     }
     return cycle ? [] : path.reverse()
-};```
+};
+```
+
 ## 2.动态规划
 
 教学：[https://cloud.tencent.com/developer/article/1817113](https://cloud.tencent.com/developer/article/1817113)
@@ -554,6 +556,25 @@ class Solution {
     }
 }
 ```
+
+### [55. 跳跃游戏](https://leetcode.cn/problems/jump-game/)
+```ts
+function canJump(nums: number[]): boolean {
+  
+  let n = nums.length
+  let  rightmost = 0
+  for(let i=0; i<n; i++)
+      if (i <= rightmost)
+          rightmost = Math.max(rightmost, i + nums[i])
+          if (rightmost >= n - 1)
+              return true
+  return false
+
+
+};
+```
+
+难度中等2045收藏分享切换为英文接收动态反馈
 
 ### 剑指 Offer 60. n 个骰子的点数
 
@@ -1594,17 +1615,36 @@ function reformatNumber(number: string): string {
     ans.push(s.substring(idx, n))
     return ans.join("-")
 };
+```
 
-作者：himymBen
-链接：https://leetcode.cn/problems/reformat-phone-number/solution/pythonjavatypescriptgo-by-himymben-3mob/
-来源：力扣（LeetCode）
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。```
+### [1790. 仅执行一次字符串交换能否使两个字符串相等](https://leetcode.cn/problems/check-if-one-string-swap-can-make-strings-equal/)
+```ts
+function areAlmostEqual(s1: string, s2: string): boolean {
+   const n = s1.length;
+    const diff = [];
+    for (let i = 0; i < n; ++i) {
+        if (s1[i] !== s2[i]) {
+            if (diff.length >= 2) {
+                return false;
+            }
+            diff.push(i);
+        }
+    }
+    if (diff.length === 0) {
+        return true;
+    }
+    if (diff.length !== 2) {
+        return false;
+    }
+    return s1[diff[0]] === s2[diff[1]] && s1[diff[1]] === s2[diff[0]];
+};
+```
+
 ## 7.哈希与映射
 
 ### [171. Excel 表列序号](https://leetcode-cn.com/problems/excel-sheet-column-number/)
 
-给你一个字符串 columnTitle ，表示 Excel 表格中的列名称。返回 该列名称对应的列序号 。
-
+给你一个字符串 columnTitle ，表示 Excel 表格中的列名称。
 例如：
 
 A -> 1
