@@ -495,7 +495,8 @@ public int[] findOrder(int numCourses, int[][] prerequisites) {
     
     return res;
 }
-}```
+}
+```
 
 
 ### 拓扑排序
@@ -526,6 +527,68 @@ function findOrder(numCourses: number, prerequisites: number[][]): number[] {
         dfs(i)
     }
     return cycle ? [] : path.reverse()
+};
+```
+
+### 最小生成树
+#### Prim
+
+##### [1584. 连接所有点的最小费用](https://leetcode.cn/problems/min-cost-to-connect-all-points/)
+```ts
+function minCostConnectPoints(points: number[][]): number {
+  const len = points.length
+  const graph = new Array(len)
+
+  //构建图
+  for(let i=0; i<len; i++){
+    graph[i] = new Array(len)
+  }
+  for (let i = 0; i < len; i++) {
+    for (let j = i+1; j < len; j++) {
+        const dis =
+          Math.abs(points[i][0] - points[j][0]) +
+          Math.abs(points[i][1] - points[j][1])
+        graph[i][j] = dis
+        graph[j][i] = dis
+    }
+  }
+  
+	//定义找边的函数
+  function searchLowcost(from: number){
+    for(let i=1;i<graph.length; i++){
+      if(lowcost[i]!=0 && graph[from][i] < lowcost[i]){
+        lowcost[i] = graph[from][i]
+        //preAdj[i] = from
+      }
+    }
+  }
+  let res =0 
+  //这道题只用算路径长度，不用记录节点，如果要记录节点需加一个数组preAdj 记录前一个节点index
+  //也可让 lowcost: number[index, distance]
+  const lowcost: number[] = new Array(len).fill(Number.MAX_VALUE)
+  //const preAdj = new Array(len).fill(0)
+	
+  searchLowcost(0)
+  lowcost[0] = 0
+
+  // 剩余n - 1个节点未加入到Vnew，遍历
+  for(let i=1; i<len; i++){
+    let minIdx = -1
+    let minDis = Number.MAX_VALUE
+    for(let j=1; j<len; j++){
+    //从当前的边中找到最小的
+      if(lowcost[j]===0) continue
+      if(lowcost[j]<minDis){
+        minDis = lowcost[j]
+        minIdx = j
+      }
+    }
+    lowcost[minIdx] = 0
+    res += minDis
+
+    searchLowcost(minIdx)
+  }
+  return res
 };
 ```
 
