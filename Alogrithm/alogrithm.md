@@ -996,6 +996,41 @@ class Solution {
 }
 ```
 
+### [75. 颜色分类](https://leetcode.cn/problems/sort-colors/)
+```ts
+/**
+ Do not return anything, modify nums in-place instead.
+ */
+function sortColors(nums: number[]): void {
+  let left = 0
+  let right = 0
+  // 2 0 2 1 1 0
+  // 0 2 2 1 1 0
+  // 0 1 2 2 1 0
+  // 0 1 1 2 2 0 
+  // 0 0 1 2 2 1
+  for(let i=0; i<nums.length; i++){
+    if(nums[i] === 0){
+      const num = nums[left]
+      nums[left] = 0
+      nums[i] = num
+      left++
+      right++
+      if(nums[i]===1){
+        nums[i] = nums[right]
+        nums[right] = 1
+      }
+    }
+    if(nums[i]===1){
+      const num = nums[right]
+      nums[right] = 1
+      nums[i] = num
+      right++
+    }
+  } 
+};
+```
+
 ### [147. 对链表进行插入排序](https://leetcode.cn/problems/insertion-sort-list/)
 时间复杂度 N(n2)
 空间复杂度 N(1)
