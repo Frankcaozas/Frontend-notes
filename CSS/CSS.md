@@ -27,3 +27,65 @@ id选择器（#id）	               100
 -   [【Q315】'+' 与 '~' 选择器有什么不同](https://github.com/shfshanyue/Daily-Question/issues/317)
 -   `+` 选择器匹配紧邻的兄弟元素
 -   `~` 选择器匹配随后的所有兄弟元素
+
+## z-index 与层叠上下文
+`z-index` 高数值一定在低数值前边吗，div 层级如下所示
+
+-   A -> 3
+    -   AA -> 1000
+-   B -> 4
+    -   BB -> 10
+
+代码见 [zindex - codepen](https://codepen.io/shanyue/pen/XWMVpxJ)
+不一定，更复杂的示例见 [层叠上下文 - MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context)
+
+## 水平垂直居中
+
+-   题目: [如何实现一个元素的水平垂直居中](https://github.com/shfshanyue/Daily-Question/issues/10)
+-   代码: [absolute/translate](https://codepen.io/shanyue/pen/XWMdabg?editors=1100)
+
+宽高不定的块状元素水平垂直居中，可见以下示例
+
+-   [absolute/translate](https://codepen.io/shanyue/pen/XWMdabg?editors=1100)
+
+同时提供几种不同的思路：
+
+-   flex:
+    -   `justify-content: center`
+    -   `align-content: center`
+-   grid
+    -   `place-items: center`
+-   absolute/translate
+    -   `position: absolute`
+    -   `left/top: 50%`
+    -   `transform: translate(50%)`
+-   ##absolute/inset##
+
+## 左侧固定、右侧自适应
+
+-   题目: [css 如何实现左侧固定300px，右侧自适应的布局](https://github.com/shfshanyue/Daily-Question/issues/18)
+-   代码: [代码](https://codepen.io/shanyue/pen/GRWmbyb?editors=1100)
+
+提供 `flex` 与 `grid` 布局的两种思路
+
+-   flex:
+    -   左侧: `flex-basis: 200px`
+    -   右侧: `flex-grow: 1; flex-shrink: 0;`
+-   grid
+    -   父容器: `grid-template-columns: 200px 1fr;`
+
+```css
+.container{
+	.left
+	.main
+}
+  
+```
+
+
+```css
+.container {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+}
+```
