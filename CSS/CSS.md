@@ -74,18 +74,17 @@ id选择器（#id）	               100
 -   grid
     -   父容器: `grid-template-columns: 200px 1fr;`
 
-```css
-.container{
-	.left
-	.main
-}
-  
-```
+## 三栏均分布局
 
+-   题目: [如何实现三列均分布局](https://github.com/shfshanyue/Daily-Question/issues/572)
+-   代码: [如何实现三列均分布局](https://codepen.io/shanyue/pen/yLMzxqX)
 
-```css
-.container {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-}
-```
+同样提供 `flex` 与 `grid` 的两种方案
+
+-   flex:
+    -   方案一: `flex: 1;`
+    -   方案二: `flex-basis: calc(100% / 3)`
+-   grid:
+    -   父容器: `grid-template-columns: 1fr 1fr 1fr`
+
+进一步问题：如何实现十六列均分布局？
