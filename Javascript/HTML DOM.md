@@ -16,8 +16,8 @@
 ## 图片懒加载
 
 -   题目：[网站开发中，如何实现图片的懒加载](https://q.shanyue.tech/fe/dom/1.html)
-
-最新的实现方案是使用 [IntersectionObserver API](https://developer.mozilla.org/zh-CN/docs/Web/API/Intersection_Observer_API)。
+###  getBoundingClientRect
+### 最新的实现方案是使用 [IntersectionObserver API](https://developer.mozilla.org/zh-CN/docs/Web/API/Intersection_Observer_API)。
 
 ```js
 const observer = new IntersectionObserver((changes) => {
@@ -33,7 +33,13 @@ const observer = new IntersectionObserver((changes) => {
 
 observer.observe(img)
 ```
+###  LazyLoading 属性
 
+浏览器觉得懒加载这事可以交给自己做，你们开发者加个属性就好了。实在是...！
+
+```
+<img src="shanyue.jpg" loading="lazy" />
+```
 ## sessionStorage 与 localStorage 有何区别
 
 
