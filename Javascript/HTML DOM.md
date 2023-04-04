@@ -233,3 +233,17 @@ document.body.oncopy = e => {
 -   `omit`: 从不发送 `cookie`.
 -   `same-origin`: 同源时发送 `cookie` (浏览器默认值)
 -   `include`: 同源与跨域时都发送 `cookie`
+
+## 如何取消请求的发送
+
+-   题目：[如何取消请求的发送](https://q.shanyue.tech/fe/dom/502.html)
+
+以下两种 API 的方式如下
+
+-   XHR 使用 `xhr.abort()`
+-   fetch 使用 `AbortController`
+## 如何把 DOM 转化为图片
+
+-   题目：[如何把 DOM 转化为图片](https://q.shanyue.tech/fe/dom/437.html)
+
+简单总结：DOM -> SVG -> Canvas -> JPEG/PNG
