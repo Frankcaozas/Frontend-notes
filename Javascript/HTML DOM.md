@@ -42,8 +42,6 @@ observer.observe(img)
 ```
 ## sessionStorage 与 localStorage 有何区别
 
-
-
 localStorage 生命周期是永久除非自主清除 sessionStorage 生命周期为当前窗口或标签页，关闭窗口或标签页则会清除数据
 
 他们均只能存储字符串类型的对象
