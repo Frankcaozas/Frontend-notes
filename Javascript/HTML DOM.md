@@ -134,3 +134,53 @@ document.cookie = 'a=3; max-age=-1'
 -   题目：[浏览器中监听事件函数 addEventListener 第三个参数有那些值](https://q.shanyue.tech/fe/dom/689.html)
 
 详见 MDN https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/addEventListener
+
+## 什么是事件冒泡和事件捕获 事件委托
+https://github.com/CsongL/javaScript-learning/blob/main/interviewJs/BrowserDom/%E4%BA%8B%E4%BB%B6%E5%86%92%E6%B3%A1%E4%BA%8B%E4%BB%B6%E6%8D%95%E8%8E%B7%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98.md
+
+## 什么是事件委托，e.currentTarget 与 e.target 有何区别
+
+-   题目：[什么是事件委托，e.currentTarget 与 e.target 有何区别](https://q.shanyue.tech/fe/dom/558.html)
+
+![](https://xunlianying.feishu.cn/space/api/box/stream/download/asynccode/?code=YjdjNDRjMGU4MGQ5MDRhMGFlOWMyNWFjZGRiOWI1NTJfZXlLZGFyZXpLNHl6M3FielVHWEthM2JENkVrdXlJdWRfVG9rZW46Ym94Y25CQUpWd0RTQXF5djJBUzdDZFB1dHNnXzE2ODA2MDkwMDM6MTY4MDYxMjYwM19WNA)
+
+事件委托指当有大量子元素触发事件时，将事件监听器绑定在父元素进行监听，此时数百个事件监听器变为了一个监听器，提升了网页性能。
+
+另外，React 把所有事件委托在 Root Element，用以提升性能。
+
+## e.preventDefault
+
+-   题目：[DOM 中如何阻止事件默认行为，如何判断事件否可阻止？](https://q.shanyue.tech/fe/dom/556.html)
+
+如下：
+
+-   `e.preventDefault()`: 取消事件
+-   `e.cancelable`: 事件是否可取消
+
+如果 `addEventListener` 第三个参数 `{ passive: true}`，`preventDefault` 将会会无效
+
+## input 事件
+
+-   题目：[React 中监听 input 的 onChange 事件的原生事件是什么](https://q.shanyue.tech/fe/dom/611.html)
+-   题目：[input 中监听值的变化是在监听什么事件](https://q.shanyue.tech/fe/dom/215.html)
+
+重点要了解下 `input` 事件，比如 React 的 `onChange` 在底层实现时，就是用了原生的 `input` 事件，可观察以下代码输出。
+
+```js
+import "./styles.css";
+
+export default function App() {
+  return (
+    <div className="App">
+      <input
+        onChange={(e) => {
+          console.log("Event: ", e);
+          console.log("NativeEvent: ", e.nativeEvent);
+          console.log("CurrentTarget: ", e.nativeEvent.currentTarget);
+          console.log("NativeEvent Type: ", e.nativeEvent.type);
+        }}
+      />
+    </div>
+  );
+}
+```
