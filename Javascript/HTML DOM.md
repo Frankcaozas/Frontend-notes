@@ -184,3 +184,52 @@ export default function App() {
   );
 }
 ```
+
+## ClipBoard API
+
+-   题目：[在浏览器中如何获取剪切板中内容](https://q.shanyue.tech/fe/dom/315.html)
+-   题目：[浏览器的剪切板中如何监听复制事件](https://q.shanyue.tech/fe/dom/444.html)
+-   题目：[如何实现页面文本不可复制](https://q.shanyue.tech/fe/dom/454.html)
+
+通过 `Clipboard API` 可以获取剪切板中内容，但需要获取到 `clipboard-read` 的权限，以下是关于读取剪贴板内容的代码：
+
+```js
+// 是否能够有读取剪贴板的权限
+// result.state == "granted" || result.state == "prompt"
+const result = await navigator.permissions.query({ name: "clipboard-read" })
+
+// 获取剪贴板内容
+const text = await navigator.clipboard.readText()
+```
+
+> 注: 该方法在 `devtools` 中不生效
+
+有 CSS 和 JS 两种方法禁止复制，以下任选其一或结合使用
+
+使用 CSS 如下：
+
+```css
+user-select: none;
+```
+
+或使用 JS 如下，监听 `selectstart` 事件，禁止选中。
+
+当用户选中一片区域时，将触发 `selectstart` 事件，Selection API 将会选中一片区域。禁止选中区域即可实现页面文本不可复制。
+
+```js
+document.body.onselectstart = e => {  
+  e.preventDefault();
+}
+
+document.body.oncopy = e => {  
+  e.preventDefault();
+}
+```
+
+## fetch 中 credentials 指什么意思
+[fetch mdn](https://developer.mozilla.org/zh-CN/docs/Web/API/Document/cookie)
+`credentials` 指在使用 `fetch` 发送请求时是否应当发送 `cookie`
+
+-   `omit`: 从不发送 `cookie`.
+-   `same-origin`: 同源时发送 `cookie` (浏览器默认值)
+-   `include`: 同源与跨域时都发送 `cookie`
