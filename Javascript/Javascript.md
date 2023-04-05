@@ -145,7 +145,7 @@ function pAll (_promises) {
 const isArray = Array.isArray || list => ({}).toString.call(list) === '[object Array]'
 ```
 
-### sleep/delay ⭐⭐⭐⭐⭐
+## sleep/delay ⭐⭐⭐⭐⭐
 
 -   题目: [【Q435】JS 如何实现一个 sleep/delay 函数](https://github.com/shfshanyue/Daily-Question/issues/442)
 -   代码: [【Q435】JS 如何实现一个 sleep/delay 函数](https://codepen.io/shanyue/pen/qBmoNRq?editors=0012)
@@ -164,7 +164,44 @@ function delay (func, seconds, ...args) {
 }
 ```
 
-### Promise.all ⭐️⭐️⭐️⭐️⭐️
+## Array.prototype.flat ⭐️⭐️⭐️⭐️⭐️
+
+-   题目: [【Q443】实现一个数组扁平化的函数 flatten](https://github.com/shfshanyue/Daily-Question/issues/451)
+-   代码: [【Q443】实现一个数组扁平化的函数 flatten](https://codepen.io/shanyue/pen/xxdjQXG?editors=0012)
+
+`reduce` 与 `concat` 简直是绝配
+
+```js
+function flatten (list, depth = 1) {
+  if (depth === 0) return list
+  return list.reduce((a, b) => a.concat(Array.isArray(b) ? flatten(b, depth - 1) : b), [])
+}
+```
+
+注意，flatten 拥有第二个参数 depth
+
+## Array.prototype.reduce ⭐️⭐️⭐️
+
+-   代码: [Array.prototype.reduce](https://codepen.io/shanyue/pen/dyWmLgQ?editors=0012)
+-   题目: [Array.prototype.reduce](https://github.com/shfshanyue/Daily-Question/issues/658)
+
+```js
+const reduce = (list, fn, ...init) => {
+  let next = init.length ? init[0] : list[0]
+  for (let i = init.length ? 0 : 1; i < list.length; i++) {
+    next = fn(next, list[i], i)
+  }
+  return next
+}
+```
+
+该题目看起来简单，实际做起来有许多边界问题需要注意，如
+
+1.  回调函数中第一个 Index 是多少？
+2.  数组为稀疏数组如何处理？
+
+## debonce
+
 ## 什么是 Javascript 的事件流？有哪些事件流模型？
 JavaScript 的事件流是指浏览器中所有事件的传递和处理过程。事件流可以分为三个阶段：事件捕获、目标阶段和事件冒泡。
 
