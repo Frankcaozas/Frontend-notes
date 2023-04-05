@@ -247,3 +247,19 @@ document.body.oncopy = e => {
 -   题目：[如何把 DOM 转化为图片](https://q.shanyue.tech/fe/dom/437.html)
 
 简单总结：DOM -> SVG -> Canvas -> JPEG/PNG
+
+## React/Vue 中的 router 实现原理如何
+
+-   题目：[React/Vue 中的 router 实现原理如何](https://q.shanyue.tech/fe/dom/463.html)
+
+前端路由有两种实现方式:
+
+history API
+
+-   通过 `history.pushState()` 跳转路由
+-   通过 `popstate event` 监听路由变化，但无法监听到 `history.pushState() history.replaceState()` 时的路由变化
+
+hash
+
+-   通过 `location.hash` 跳转路由
+-   通过 `hashchange event` 监听路由变化
