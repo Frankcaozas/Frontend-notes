@@ -199,6 +199,17 @@ const reduce = (list, fn, ...init) => {
 
 1.  回调函数中第一个 Index 是多少？
 2.  数组为稀疏数组如何处理？
+## String.prototype.trim ⭐️⭐️⭐️
+
+-   题目: [如何去除字符串首尾空白字符](https://github.com/shfshanyue/Daily-Question/issues/667)
+
+在正则表达式中，`\s` 指匹配一个空白字符，包括空格、制表符、换页符和换行符。等价于`[ \f\n\r\t\v\u00a0\u1680\u180e\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]`。
+
+```
+const trim = str => str.trim || str.replace(/^\s+|\s+$/g, '')
+```
+
+一般在考察正则时会考察该 API
 
 ## debonce 防抖
 n 秒内只执行最后一次   清零
