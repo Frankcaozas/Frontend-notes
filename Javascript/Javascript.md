@@ -82,91 +82,24 @@ The possible values are "none", "copy", "copyLink", "copyMove", "link", "linkMov
 ##  手写 call、apply 及 bind 函数
 
 #### 1.实现call函数
-
-**实现步骤：**
-
--   处理边界：
-    
-    -   对象不存在，this指向window；
--   将「调用函数」_挂载到_「this指向的对象」的fn属性上。
-    
--   执行「this指向的对象」上的fn函数，并传入参数，返回结果。
-    
-
-```javascript
-Function.prototype.mu_call = function (context, ...args) {
-    //obj不存在指向window
-    if (!context || context === null) {
-      context = window;
-    }
-    // 创造唯一的key值  作为我们构造的context内部方法名
-    let fn = Symbol();
-​
-    //this指向调用call的函数
-    context[fn] = this;
-​
-    // 执行函数并返回结果 相当于把自身作为传入的context的方法进行调用了
-    return context[fn](...args);
-  };
-​
-  // 测试
-  var value = 2;
-  var obj1 = {
-    value: 1,
-  };
-  function bar(name, age) {
-    var myObj = {
-      name: name,
-      age: age,
-      value: this.value,
-    };
-    console.log(this.value, myObj);
-  }
-  bar.mu_call(null); //打印 2 {name: undefined, age: undefined, value: 2}
-  bar.mu_call(obj1, 'tom', '110'); // 打印 1 {name: "tom", age: "110", value: 1}
-复制代码
-```
-
 #### 2.实现apply函数
-
-**实现步骤：**
-
--   与call一致
--   区别于参数的形式
-
-```ini
-Function.prototype.mu_apply = function (context, args) {
-  //obj不存在指向window
-  if (!context || context === null) {
-    context = Window;
-  }
-  // 创造唯一的key值  作为我们构造的context内部方法名
-  let fn = Symbol();
-​
-  //this指向调用call的函数
-  context[fn] = this;
-​
-  // 执行函数并返回结果 相当于把自身作为传入的context的方法进行调用了
-  return context[fn](...args);
+```javascript
+Function.prototype.myCall = function (ctx = globalThis, ...args) {
+  const key = Symbol("key");
+  ctx[key] = this;
+  const res=ctx[key](...args);
+  delete ctx[key]
+  return res
 };
-​
-// 测试
-var value = 2;
-var obj1 = {
-  value: 1,
+
+Function.prototype.myApply = function (ctx = globalThis, args) {
+  const key = Symbol("key");
+  ctx[key] = this;
+  const res=ctx[key](...args);
+  delete ctx[key]
+  return res
 };
-function bar(name, age) {
-  var myObj = {
-    name: name,
-    age: age,
-    value: this.value,
-  };
-  console.log(this.value, myObj);
-}
-bar.mu_apply(obj1, ["tom", "110"]); // 打印 1 {name: "tom", age: "110", value: 1}
-复制代码
 ```
-
 #### 3.实现bind函数
 
 ```js
