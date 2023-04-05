@@ -107,7 +107,64 @@ Function.prototype.fakeBind = function(obj, ...args) {
   return (...rest) => this.call(obj, ...args, ...rest)
 }
 ```
+## Promise.all ⭐️⭐️⭐️⭐️⭐️
 
+-   代码: [Promise.all](https://codepen.io/shanyue/pen/JjWEqBL?editors=0012)
+-   题目: [Promise.all](https://github.com/shfshanyue/Daily-Question/issues/500)
+
+乍看简单，实现时方觉不易。
+
+```js
+function pAll (_promises) {
+  return new Promise((resolve, reject) => {
+    // Iterable => Array
+    const promises = Array.from(_promises)
+    // 结果用一个数组维护
+    const r = []
+    const len = promises.length
+    let count = 0
+    for (let i = 0; i < len; i++) {
+      // Promise.resolve 确保把所有数据都转化为 Promise
+      Promise.resolve(promises[i]).then(o => { 
+        // 因为 promise 是异步的，保持数组一一对应
+        r[i] = o;
+
+        // 如果数组中所有 promise 都完成，则返回结果数组
+        if (++count === len) {
+          resolve(r)
+        }
+        // 当发生异常时，直接 reject
+      }).catch(e => reject(e))
+    }
+  })
+}
+```
+
+## isArray
+```js
+const isArray = Array.isArray || list => ({}).toString.call(list) === '[object Array]'
+```
+
+### sleep/delay ⭐⭐⭐⭐⭐
+
+-   题目: [【Q435】JS 如何实现一个 sleep/delay 函数](https://github.com/shfshanyue/Daily-Question/issues/442)
+-   代码: [【Q435】JS 如何实现一个 sleep/delay 函数](https://codepen.io/shanyue/pen/qBmoNRq?editors=0012)
+
+`sleep` 函数既是面试中常问到的一道代码题，也是日常工作，特别是测试中常用的一个工具函数。
+
+```js
+const sleep = (seconds) => new Promise(resolve => setTimeout(resolve, seconds))
+
+function delay (func, seconds, ...args) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      Promise.resolve(func(...args)).then(resolve)
+    }, seconds)
+  })
+}
+```
+
+### Promise.all ⭐️⭐️⭐️⭐️⭐️
 ## 什么是 Javascript 的事件流？有哪些事件流模型？
 JavaScript 的事件流是指浏览器中所有事件的传递和处理过程。事件流可以分为三个阶段：事件捕获、目标阶段和事件冒泡。
 
