@@ -200,7 +200,36 @@ const reduce = (list, fn, ...init) => {
 1.  回调函数中第一个 Index 是多少？
 2.  数组为稀疏数组如何处理？
 
-## debonce
+## debonce 防抖
+n 秒内只执行最后一次   清零
+```ts
+function debonce(fn: Function, time: number){
+	let timer
+	return (...args)=>{
+		clearTimeout(timer)
+		timer = setTimeout(()=>{
+			fn(...args)
+		}, time)
+	}
+	
+}
+```
+## throttle 节流
+n秒内只能执行一次  加锁
+```ts
+function throttle(fn: Function, time: number ){
+	let timer
+	return (...args)=>{
+		if(timer) return 
+		else{
+			timer = setTimeout(()=>{
+				fn(...args)
+				timer = null
+			}, time)
+		}
+	}
+}
+```
 
 ## 什么是 Javascript 的事件流？有哪些事件流模型？
 JavaScript 的事件流是指浏览器中所有事件的传递和处理过程。事件流可以分为三个阶段：事件捕获、目标阶段和事件冒泡。
