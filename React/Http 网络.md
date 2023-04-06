@@ -13,3 +13,7 @@
 3.  JSONP，详解见 [JSONP 的原理是什么，如何实现](https://github.com/shfshanyue/Daily-Question/issues/447)
 ### JSONP
 https://q.shanyue.tech/fe/dom/447.html#%E4%B8%80%E4%B8%AA-jsonp-%E8%AF%B7%E6%B1%82
+
+## get post
+
+get参数长度限制不是因为http协议的限制，不同的浏览器有不同的限制
