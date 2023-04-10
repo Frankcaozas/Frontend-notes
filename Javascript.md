@@ -3,23 +3,6 @@ npm2 是通过嵌套的方式管理 node_modules 的，会有同样的依赖复�
 
 npm3+ 和 yarn 是通过铺平的扁平化的方式来管理 node_modules，解决了嵌套方式的部分问题，但是引入了幽灵依赖的问题，并且同名的包只会提升一个版本的，其余的版本依然会复制多次。
 
-pnpm 则是用了另一种方式，不再是复制了，而是都从全局 store 硬连接到 node_modules/.pnpm，然后之间通过软链接来组织依赖关系。
-
-
-首先介绍下 link，也就是软硬连接，这是操作系统提供的机制，硬连接就是同一个文件的不同引用，而软链接是新建一个文件，文件内容指向另一个路径。当然，这俩链接使用起来是差不多的。
-
-如果不复制文件，只在全局仓库保存一份 npm 包的内容，其余的地方都 link 过去呢？
-
-这样不会有复制多次的磁盘空间浪费，而且也不会有路径过长的问题。因为路径过长的限制本质上是不能有太深的目录层级，现在都是各个位置的目录的 link，并不是同一个目录，所以也不会有长度限制。
-
-没错，pnpm 就是通过这种思路来实现的。
-
-再把 node_modules 删掉，然后用 pnpm 重新装一遍，执行 pnpm install。
-
-你会发现它打印了这样一句话：
-
-![](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1b2d51d9a17743a4bafc42f1bbfd310c~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?)
-
 包是从全局 store 硬连接到虚拟 store 的，这里的虚拟 store 就是 node_modules/.pnpm。
 
 我们打开 node_modules 看一下：
@@ -33,15 +16,20 @@ pnpm 则是用了另一种方式，不再是复制了，而是都从全局 store
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/65a69589bd534fdd97bdbeb6e3e1024c~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?)
 
 所有的依赖都在这里铺平了，都是从全局 store 硬连接过来的，然后包和包之间的依赖关系是通过软链接组织的。
-
+![[截屏2023-04-11 00.46.42.png]]
 比如 .pnpm 下的 expresss，这些都是软链接，
-
+**express 的真实地址在 node_modules/.pnpm/express@4.18.1/node_modules/express**
 ![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c50d8dc8a2a4466ba9e5eccd5c15614e~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?)
 
 也就是说，所有的依赖都是从全局 store 硬连接到了 node_modules/.pnpm 下，然后之间通过软链接来相互依赖。
 
   ![[Pasted image 20230410114701.png]]
+### 软链接 硬链接
+A symbolic link, also known as a soft link, is a special type of file that acts as a pointer to another file or directory. It is essentially a shortcut to another file, and when you open a symbolic link, you're actually accessing the file or directory that it points to. Symbolic links are created using the `ln -s` command.
+For example, if you have a file called `file1.txt` and you create a symbolic link to it called `file2.txt`, any changes made to `file1.txt` will also be reflected in `file2.txt`, since they are pointing to the same file.
 
+A hard link, on the other hand, is a reference to a file or directory that points directly to the data on the disk. Unlike a symbolic link, a hard link is an actual file or directory entry that is created by the operating system. Hard links are created using the `ln` command.
+For example, if you have a file called `file1.txt` and you create a hard link to it called `file2.txt`, any changes made to `file1.txt` will also be reflected in `file2.txt`, since they are both pointing to the same physical data on the disk. However, if you delete `file1.txt`, `file2.txt` will still remain on the disk, because it is a hard link to the same data.
 # DOM
 ## Window 大小和滚动
 ### 1.窗口的 width/height
