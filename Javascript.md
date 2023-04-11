@@ -1,4 +1,14 @@
 # pnpm
+### 好处
+-   幽灵依赖解决 
+	- 在.pnpm下铺平
+	
+-   （节省磁盘）node_modules 体积过大问题 
+	- 同一个依赖一个项目内只会有一份
+	- 通过硬链接到全局 store
+    
+   
+### 原理
 npm2 是通过嵌套的方式管理 node_modules 的，会有同样的依赖复制多次的问题。
 
 npm3+ 和 yarn 是通过铺平的扁平化的方式来管理 node_modules，解决了嵌套方式的部分问题，但是引入了幽灵依赖的问题，并且同名的包只会提升一个版本的，其余的版本依然会复制多次。
@@ -30,6 +40,7 @@ For example, if you have a file called `file1.txt` and you create a symbolic lin
 
 A hard link, on the other hand, is a reference to a file or directory that points directly to the data on the disk. Unlike a symbolic link, a hard link is an actual file or directory entry that is created by the operating system. Hard links are created using the `ln` command.
 For example, if you have a file called `file1.txt` and you create a hard link to it called `file2.txt`, any changes made to `file1.txt` will also be reflected in `file2.txt`, since they are both pointing to the same physical data on the disk. However, if you delete `file1.txt`, `file2.txt` will still remain on the disk, because it is a hard link to the same data.
+
 # DOM
 ## Window 大小和滚动
 ### 1.窗口的 width/height
