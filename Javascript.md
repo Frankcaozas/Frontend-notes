@@ -306,6 +306,12 @@ JavaScript 的事件流是指浏览器中所有事件的传递和处理过程。
 
 总体来说，W3C 标准事件模型是当前主流的事件流模型。对于事件流，我们需要了解事件捕获、目标阶段和事件冒泡，以便于正确地使用事件处理程序。
 
+## 实现private变量
+symbol
+闭包
+ '#'
+ 
+https://juejin.cn/post/7042244444782870558#heading-7
 ## pnpm
 https://juejin.cn/post/7036319707590295565
 https://zhuanlan.zhihu.com/p/419399115
