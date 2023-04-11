@@ -150,12 +150,10 @@ Function.prototype.fakeBind = function(obj, ...args) {
   return (...rest) => this.call(obj, ...args, ...rest)
 }
 ```
-## Promise.all ⭐️⭐️⭐️⭐️⭐️
+## Promise.all
 
 -   代码: [Promise.all](https://codepen.io/shanyue/pen/JjWEqBL?editors=0012)
 -   题目: [Promise.all](https://github.com/shfshanyue/Daily-Question/issues/500)
-
-乍看简单，实现时方觉不易。
 
 ```js
 function pAll (_promises) {
@@ -182,13 +180,21 @@ function pAll (_promises) {
   })
 }
 ```
-
+## Promise.allSettled
+```ts
+const myPromiseSettled = (items) => {
+  const onResolved = (value) => ({ status: "fulfilled", value });
+  const onRejected = (reason) => ({ status: "rejected", reason });
+  return Promise.all(
+    items.map((item) => Promise.resolve(item).then(onResolved, onRejected))
+  );
+};```
 ## isArray
 ```js
 const isArray = Array.isArray || list => ({}).toString.call(list) === '[object Array]'
 ```
 
-## sleep/delay ⭐⭐⭐⭐⭐
+## sleep/delay
 
 -   题目: [【Q435】JS 如何实现一个 sleep/delay 函数](https://github.com/shfshanyue/Daily-Question/issues/442)
 -   代码: [【Q435】JS 如何实现一个 sleep/delay 函数](https://codepen.io/shanyue/pen/qBmoNRq?editors=0012)
