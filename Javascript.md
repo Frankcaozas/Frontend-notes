@@ -181,6 +181,7 @@ function pAll (_promises) {
 }
 ```
 ## Promise.allSettled
+返回所有的结果
 ```ts
 const myPromiseSettled = (items) => {
   const onResolved = (value) => ({ status: "fulfilled", value });
