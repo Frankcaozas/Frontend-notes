@@ -150,6 +150,9 @@ Function.prototype.fakeBind = function(obj, ...args) {
   return (...rest) => this.call(obj, ...args, ...rest)
 }
 ```
+# Promise
+## [实现promise](https://zhuanlan.zhihu.com/p/58428287)
+## async await原理
 ## Promise.all
 
 -   代码: [Promise.all](https://codepen.io/shanyue/pen/JjWEqBL?editors=0012)
@@ -214,7 +217,7 @@ function delay (func, seconds, ...args) {
 }
 ```
 
-## Array.prototype.flat ⭐️⭐️⭐️⭐️⭐️
+## Array.prototype.flat 
 
 -   题目: [【Q443】实现一个数组扁平化的函数 flatten](https://github.com/shfshanyue/Daily-Question/issues/451)
 -   代码: [【Q443】实现一个数组扁平化的函数 flatten](https://codepen.io/shanyue/pen/xxdjQXG?editors=0012)
@@ -230,7 +233,7 @@ function flatten (list, depth = 1) {
 
 注意，flatten 拥有第二个参数 depth
 
-## Array.prototype.reduce ⭐️⭐️⭐️
+## Array.prototype.reduce 
 
 -   代码: [Array.prototype.reduce](https://codepen.io/shanyue/pen/dyWmLgQ?editors=0012)
 -   题目: [Array.prototype.reduce](https://github.com/shfshanyue/Daily-Question/issues/658)
@@ -249,7 +252,7 @@ const reduce = (list, fn, ...init) => {
 
 1.  回调函数中第一个 Index 是多少？
 2.  数组为稀疏数组如何处理？
-## String.prototype.trim ⭐️⭐️⭐️
+## String.prototype.trim
 
 -   题目: [如何去除字符串首尾空白字符](https://github.com/shfshanyue/Daily-Question/issues/667)
 
@@ -263,6 +266,7 @@ const trim = str => str.trim || str.replace(/^\s+|\s+$/g, '')
 
 ## debonce 防抖
 n 秒内只执行最后一次   清零
+场景：input button点击提交请求 resize
 ```ts
 function debonce(fn: Function, time: number){
 	let timer
@@ -276,7 +280,7 @@ function debonce(fn: Function, time: number){
 }
 ```
 ## throttle 节流
-n秒内只能执行一次  加锁
+n秒内只能执行一次  加锁 scroll
 ```ts
 function throttle(fn: Function, time: number ){
 	let timer
@@ -310,8 +314,5 @@ JavaScript 的事件流是指浏览器中所有事件的传递和处理过程。
 symbol
 闭包
  '#'
- 
 https://juejin.cn/post/7042244444782870558#heading-7
-## pnpm
-https://juejin.cn/post/7036319707590295565
-https://zhuanlan.zhihu.com/p/419399115
+
