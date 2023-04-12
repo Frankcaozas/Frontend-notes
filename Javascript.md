@@ -150,10 +150,10 @@ Function.prototype.fakeBind = function(obj, ...args) {
   return (...rest) => this.call(obj, ...args, ...rest)
 }
 ```
-# Promise
-## [实现promise](https://zhuanlan.zhihu.com/p/58428287)
-## async await原理
-## Promise.all
+## Promise
+### [实现promise](https://zhuanlan.zhihu.com/p/58428287)
+### async await原理
+### Promise.all
 
 -   代码: [Promise.all](https://codepen.io/shanyue/pen/JjWEqBL?editors=0012)
 -   题目: [Promise.all](https://github.com/shfshanyue/Daily-Question/issues/500)
@@ -183,7 +183,7 @@ function pAll (_promises) {
   })
 }
 ```
-## Promise.allSettled
+### Promise.allSettled
 返回所有的结果
 ```ts
 const myPromiseSettled = (items) => {
@@ -193,30 +193,11 @@ const myPromiseSettled = (items) => {
     items.map((item) => Promise.resolve(item).then(onResolved, onRejected))
   );
 };```
-## isArray
+## Array
+### isArray
 ```js
 const isArray = Array.isArray || list => ({}).toString.call(list) === '[object Array]'
 ```
-
-## sleep/delay
-
--   题目: [【Q435】JS 如何实现一个 sleep/delay 函数](https://github.com/shfshanyue/Daily-Question/issues/442)
--   代码: [【Q435】JS 如何实现一个 sleep/delay 函数](https://codepen.io/shanyue/pen/qBmoNRq?editors=0012)
-
-`sleep` 函数既是面试中常问到的一道代码题，也是日常工作，特别是测试中常用的一个工具函数。
-
-```js
-const sleep = (seconds) => new Promise(resolve => setTimeout(resolve, seconds))
-
-function delay (func, seconds, ...args) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      Promise.resolve(func(...args)).then(resolve)
-    }, seconds)
-  })
-}
-```
-
 ## Array.prototype.flat 
 
 -   题目: [【Q443】实现一个数组扁平化的函数 flatten](https://github.com/shfshanyue/Daily-Question/issues/451)
@@ -230,9 +211,6 @@ function flatten (list, depth = 1) {
   return list.reduce((a, b) => a.concat(Array.isArray(b) ? flatten(b, depth - 1) : b), [])
 }
 ```
-
-注意，flatten 拥有第二个参数 depth
-
 ## Array.prototype.reduce 
 
 -   代码: [Array.prototype.reduce](https://codepen.io/shanyue/pen/dyWmLgQ?editors=0012)
@@ -252,6 +230,26 @@ const reduce = (list, fn, ...init) => {
 
 1.  回调函数中第一个 Index 是多少？
 2.  数组为稀疏数组如何处理？
+注意，flatten 拥有第二个参数 depth
+## sleep/delay
+
+-   题目: [【Q435】JS 如何实现一个 sleep/delay 函数](https://github.com/shfshanyue/Daily-Question/issues/442)
+-   代码: [【Q435】JS 如何实现一个 sleep/delay 函数](https://codepen.io/shanyue/pen/qBmoNRq?editors=0012)
+
+`sleep` 函数既是面试中常问到的一道代码题，也是日常工作，特别是测试中常用的一个工具函数。
+
+```js
+const sleep = (seconds) => new Promise(resolve => setTimeout(resolve, seconds))
+
+function delay (func, seconds, ...args) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      Promise.resolve(func(...args)).then(resolve)
+    }, seconds)
+  })
+}
+```
+
 ## String.prototype.trim
 
 -   题目: [如何去除字符串首尾空白字符](https://github.com/shfshanyue/Daily-Question/issues/667)
