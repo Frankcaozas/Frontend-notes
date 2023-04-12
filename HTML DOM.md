@@ -116,6 +116,16 @@ display：inline-block，定义元素为行内块级元素
 
 1.  `document.querySelector('*')`，标准规范实现
 2.  `$$('*')`，devtools 实现
+
+## 渲染 HTML 的过程
+
+1.  解析 HTML：浏览器将 HTML 文档解析为 DOM 树。解析过程包括识别标签、构建 DOM 树结构等。
+2.  解析 CSS：浏览器将 CSS 样式表解析为样式规则，并将其应用于 DOM 树中的相应元素。
+3.  布局：浏览器根据 CSS 样式规则和 DOM 树的结构，计算出每个元素在视口中的位置和大小，并形成一颗渲染树。
+4.  绘制：浏览器将渲染树中的元素按照其在视口中的位置和大小绘制出来。
+5.  合成：浏览器将绘制出来的图像合成为最终的视觉输出。
+
+在这个过程中，如果浏览器遇到 JavaScript 代码，会暂停渲染进程并执行 JavaScript 代码。执行完 JavaScript 代码后，再恢复渲染进程。
 ## 图片懒加载
 
 -   题目：[网站开发中，如何实现图片的懒加载](https://q.shanyue.tech/fe/dom/1.html)
@@ -160,8 +170,8 @@ localStorage 生命周期是永久除非自主清除 sessionStorage 生命周期
 ```
 
 而当每次获取数据时，判断当前时间是否已超过 `__expires` 过期时间，如果超过，则返回 `undefined`，并删除该数据。
-
-## Cookie 属性
+## Cookie
+### Cookie 属性
 
 -   题目：[浏览器中 cookie 有哪些字段](https://q.shanyue.tech/fe/dom/560.html)
 
@@ -174,13 +184,13 @@ Cookie 有以下属性
 -   Secure: 只能在 HTTPS 连接中配置
 -   SameSite
 
-## Cookie maxAge
+### Cookie maxAge
 
 -   题目：[当 cookie 没有设置 maxage 时，cookie 会存在多久](https://q.shanyue.tech/fe/dom/313.html)
 
 如果没有 maxAge，则 cookie 的有效时间为会话时间。
 
-## Cookie SameSite
+### Cookie SameSite
 
 -   题目：[SameSite Cookie 有哪些值，是如何预防 CSRF 攻击的？](https://q.shanyue.tech/fe/dom/569.html)
 
@@ -194,7 +204,7 @@ Cookie 有以下属性
 
 目前，主流浏览器 Same-Site 的默认值为 `Lax`，而在以前是 `None`，将会预防大部分 CSRF 攻击，如果需要手动指定 `Same-Site` 为 `None`，需要指定 Cookie 属性 `Secure`，即在 https 下发送
 
-## Cookie 增删改查
+### Cookie 增删改查
 
 -   题目：[如何设置一个 Cookie](https://q.shanyue.tech/fe/dom/161.html)
 -   题目：[如何删除一个 Cookie](https://q.shanyue.tech/fe/dom/162.html)
