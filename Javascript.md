@@ -175,8 +175,7 @@ class Prom {
       setTimeout(() => {
         this.status = 'RESOLVED'
         this.value = value
-        this.resolveFns.forEach(({ fn, resolve: res, reject: rej }) =>
-          res(fn(value))
+        this.resolveFns.forEach(({ fn, resolve: res, reject: rej })     =>   res(fn(value))
         )
       })
     }
