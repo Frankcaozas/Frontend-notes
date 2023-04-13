@@ -97,4 +97,6 @@ id选择器（#id）	               100
 
 最简单来讲，可通过媒体查询 `@media (prefers-color-scheme: dark)` 与 CSS 变量实现。
 
+`window.matchMedia('(prefers-color-scheme: dark)').matches`
+
 ## bfc
