@@ -22,6 +22,9 @@ React 和 Vue 做的假设是：
 
 ## hooks原理
 
+
+## Scheduler
+[ Scheduler 为什么使用 MessageChannel 实现](https://juejin.cn/post/6953804914715803678)
 # NEXT js
 ## ISR原理
 SWR
