@@ -376,7 +376,27 @@ function deepClone(source, weakmap) {
   return result
 }```
 ## isEqual
-
+```ts
+function isEqual(x, y) {
+  if (x === y) {
+    return true;
+  } else if ((typeof x === 'object' && x !== null) && (typeof y === 'object' && y !== null)) {
+    const keysX = Object.keys(x);
+    const keysY = Object.keys(y);
+    if (keysX.length !== keysY.length) {
+      return false;
+    }
+    for (const key of keysX) {
+      if(!isEqual(x[key], y[key])) {
+        return false;
+      }
+    }
+    return true;
+  } else {
+    return false;
+  }
+}
+```
 ## String.prototype.trim
 
 -   题目: [如何去除字符串首尾空白字符](https://github.com/shfshanyue/Daily-Question/issues/667)
