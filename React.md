@@ -25,6 +25,9 @@ React 和 Vue 做的假设是：
 
 ## Scheduler
 [ Scheduler 为什么使用 MessageChannel 实现](https://juejin.cn/post/6953804914715803678)
+## React serverComponent 和 SSR区别
+1.  SSR返回的是一个Html，而React Server Component返回的是一个React可解析的结构。
+2.  SSR返回的页面会让页面重新刷新，丢失掉之前页面上的状态，比如表单选中之类的；而React Server Component返回的并不会让页面重新刷新而丢失状态。
 # NEXT js
 ## ISR原理
 SWR
