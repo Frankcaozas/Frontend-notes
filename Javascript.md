@@ -121,7 +121,7 @@ Can be set (during the dragstart event), to change the allowed operations.
 
 The possible values are "none", "copy", "copyLink", "copyMove", "link", "linkMove", "move", "all", and "uninitialized"
 ```
-
+# 手写
 ##  手写 call、apply 及 bind 函数
 
 #### 1.实现call函数
