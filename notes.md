@@ -869,7 +869,35 @@ const myPromiseSettled = (items) => {
   return Promise.all(
     items.map((item) => Promise.resolve(item).then(onResolved, onRejected))
   );
-};```
+};
+```
+
+### map
+限制并发量， 类似Promise.all 
+```ts
+const map = function (items, fn, concurrency = Infinity) {
+  const arr = Array.from(items)
+  let curIndex = 0
+  const len = items.length
+  const result = []
+  return new Promise((resolve) => {
+    function next() {
+      const idx = curIndex
+      curIndex++
+      Promise.resolve(arr[idx])
+        .then((item) => fn(item, idx))
+        .then((val) => {
+          result[idx] = val
+          if (curIndex === len) resolve(result)
+          else next()
+        })
+    }
+    for (let i = 0; i <= concurrency && i < len; i++) {
+      next()
+    }
+  })
+}
+```
 ## Array
 ### isArray
 ```js
