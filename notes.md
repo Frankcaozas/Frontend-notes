@@ -655,7 +655,7 @@ https://juejin.cn/post/7042244444782870558#heading-7
 3. FormData对象：在上传文件的Ajax请求中，需要使用FormData对象来构造表单数据，其中包括文件数据、文本数据以及其他数据。FormData对象可以通过JavaScript API进行创建和操作，也可以通过表单元素的实例来创建。
 4. XMLHttpRequest对象：上传文件的Ajax请求与一般的Ajax请求一样需要使用XMLHttpRequest对象来发送请求，但是在上传文件时需要对XMLHttpRequest对象进行特殊的处理，比如监听onprogress事件来显示上传进度、监听onload事件来处理上传结果等。
 
-##  CommonJS、**AMD**、**CMD**、**ES Module** 
+##  CommonJS、AMD、CMD、ES Module 
 
 1. CommonJS:一种用于服务器端的模块化规范，主要用于 Node.js，它通过 require 来引 入模块，通过 module.exports 或 exports 来导出模块。
 2. AMD:一种用于浏览器端异步加载模块的规范，主要用于 RequireJS，它通过 define 来 定义模块，通过 require 来异步加载模块。
