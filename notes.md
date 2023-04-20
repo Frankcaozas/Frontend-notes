@@ -1055,6 +1055,25 @@ function throttle(fn: Function, time: number ){
 }
 ```
 ## curry 函数科里化
+```ts
+function curry(fn, ...args) {
+  //fn.length 参数的个数
+  return fn.length <= args.length ? fn(...args) : curry.bind(null,fn, ...args)
+}
+```
+## new
+```ts
+function mu_new(fn,...arg){
+    // 首先创建空对象
+    const obj = {};
+    // 将空对象的原型proto指向构造函数的原型prototype
+    Object.setPrototypeOf(obj, fn.prototype)
+    // 将this指向新创建的对象，并且执行构造函数
+    const result = fn.apply(obj,arg);
+    // 执行结果有返回值并且是一个对象，返回执行的结果，否侧返回新创建的对象
+    return result instanceof Object ? result : obj;
+}
+```
 
 # 网络
 ## OSI七层模型
@@ -1105,8 +1124,19 @@ TCP 建立连接时，通过三次握手**能防止历史连接的建立，能�
 
 从上面过程可知，服务端通常需要等待完成数据的发送和处理，所以服务端的 `ACK` 和 `FIN` 一般都会分开发送，因此是需要四次挥手。
 
-但是**在特定情况下，四次挥手是可以变成三次挥手的**，具体情况可以看这篇：[TCP 四次挥手，可以变成三次吗？(opens new window)](https://xiaolincoding.com/network/3_tcp/tcp_three_fin.html)
+但是**在特定情况下，四次挥手是可以变成三次挥手的**
 
+#### 什么情况会出现三次挥手？
+
+当被动关闭方（上图的服务端）在 TCP 挥手过程中，「**没有数据要发送」并且「开启了 TCP 延迟确认机制」，那么第二和第三次挥手就会合并传输，这样就出现了三次挥手。**
+
+> 什么是 TCP 延迟确认机制？
+
+当发送没有携带数据的 ACK，它的网络效率也是很低的，因为它也有 40 个字节的 IP 头 和 TCP 头，但却没有携带数据报文。 为了解决 ACK 传输效率低问题，所以就衍生出了 **TCP 延迟确认**。 TCP 延迟确认的策略：
+
+-   当有响应数据要发送时，ACK 会随着响应数据一起立刻发送给对方
+-   当没有响应数据要发送时，ACK 将会延迟一段时间，以等待是否有响应数据可以一起发送
+-   如果在延迟等待发送 ACK 期间，对方的第二个数据报文又到达了，这时就会立刻发送 ACK
 ## HTTP
 ### 键入网址到网页显示，期间发生了什么
 
