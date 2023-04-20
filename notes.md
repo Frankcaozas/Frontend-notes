@@ -891,7 +891,7 @@ const map = function (items, fn, concurrency = Infinity) {
 ```js
 const isArray = Array.isArray || list => ({}).toString.call(list) === '[object Array]'
 ```
-## Array.prototype.flat 
+### Array.prototype.flat 
 
 -   题目: [【Q443】实现一个数组扁平化的函数 flatten](https://github.com/shfshanyue/Daily-Question/issues/451)
 -   代码: [【Q443】实现一个数组扁平化的函数 flatten](https://codepen.io/shanyue/pen/xxdjQXG?editors=0012)
@@ -904,7 +904,7 @@ function flatten (list, depth = 1) {
   return list.reduce((a, b) => a.concat(Array.isArray(b) ? flatten(b, depth - 1) : b), [])
 }
 ```
-## Array.prototype.reduce 
+### Array.prototype.reduce 
 
 -   代码: [Array.prototype.reduce](https://codepen.io/shanyue/pen/dyWmLgQ?editors=0012)
 -   题目: [Array.prototype.reduce](https://github.com/shfshanyue/Daily-Question/issues/658)
@@ -1054,6 +1054,7 @@ function throttle(fn: Function, time: number ){
 	}
 }
 ```
+## curry 函数科里化
 
 # 网络
 ## OSI七层模型
