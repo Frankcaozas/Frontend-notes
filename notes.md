@@ -1155,7 +1155,16 @@ const myPromiseSettled = (items) => {
   );
 };
 ```
-
+## race
+```js
+const promiseRace = (promises) => {
+  return new Promise((resolve, reject) => {
+    for(let i=0;i<promises.length;i++) {
+      promises[i].then(res => resolve(res)).catch(err => reject(err))
+    }
+  })
+}
+```
 ### map
 限制并发量， 类似Promise.all 
 ```ts
@@ -1371,7 +1380,18 @@ function mu_new(fn,...arg){
 }
 ```
 
+## 用setTimeout实现setInterval  
+setInterval计时可能不准确，原因是setInterval的回调需要等到系统计算资源空闲下来才会执行，并且下一次触发时间是在setInterval回调执行完毕之后才开始计时。如果setInterval内执行的计算过于耗时，或者有其他耗时任务在执行，会导致setInterval计时不准。  
 
+```ts
+const mySetInterval = (fn, delay) => {
+    setTimeout(() => {
+        fn()
+        setTimeout(arguments.callee, delay/2)
+    }, delay/2)
+}
+mySetInterval(() => console.log(1), 1000)
+```
 # React
 
 
