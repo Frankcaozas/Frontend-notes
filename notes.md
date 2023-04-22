@@ -1,5 +1,8 @@
-# HTML
+# HTML&浏览器
 ## Cookie
+
+存储大小4kb
+
 ### Cookie 属性
 
 -   题目：[浏览器中 cookie 有哪些字段](https://q.shanyue.tech/fe/dom/560.html)
@@ -13,13 +16,11 @@ Cookie 有以下属性
 -   Secure: 只能在 HTTPS 连接中配置
 -   SameSite
 
-### Cookie maxAge
-
--   题目：[当 cookie 没有设置 maxage 时，cookie 会存在多久](https://q.shanyue.tech/fe/dom/313.html)
+#### Cookie maxAge
 
 如果没有 maxAge，则 cookie 的有效时间为会话时间。
 
-### Cookie SameSite
+#### Cookie SameSite
 
 -   题目：[SameSite Cookie 有哪些值，是如何预防 CSRF 攻击的？](https://q.shanyue.tech/fe/dom/569.html)
 
@@ -69,7 +70,7 @@ document.cookie = 'a=3; max-age=-1'
 < ""
 ```
 
-同时，也可以使用最新关于 cookie 操作的 API: [CookieStore API](https://developer.mozilla.org/en-US/docs/Web/API/CookieStore) 其中的 `cookieStore.delete(name)` 删除某个 cookie
+同时，也可以使用最新关于 cookie 操作的 API: [CookieStore API](https://developer.mozilla.org/en-US/docs/Web/API/CookieStore) 其中的 `cookieStore.delete(name)` 删除某个 cookie(HTTPS才能用)
 
 
 ## 块级元素 行内元素 块级行内元素
@@ -387,7 +388,7 @@ document.body.oncopy = e => {
 history API
 
 -   通过 `history.pushState()` 跳转路由
--   通过 `popstate event` 监听路由变化，但无法监听到 `history.pushState() history.replaceState()` 时的路由变化
+-   通过 `popstate event` 监听路由变化，`history.forward() history.back()`会触发，  但无法监听到 `history.pushState() history.replaceState()` 时的路由变化
 
 hash
 
@@ -497,6 +498,45 @@ id选择器（#id）	               100
 `window.matchMedia('(prefers-color-scheme: dark)').matches`
 
 ## bfc
+
+块级格式化上下文
+
+当一个元素生成 BFC 时，它的子元素会按照一定的规则进行布局，不会影响到 BFC 以外的元素。常见的触发 BFC 的方式有：
+
+- `html` 根元素
+
+- `float`（不为 `none` 即可）
+  - `left`
+  - `right`
+
+- position
+
+  - `absolute``
+  - ``fixed`
+
+- `display`
+
+  - `inline-block`
+
+  - `flex、inline-flex`
+
+  - `grid、inline-grid`
+
+  - `table`、`table-cell`、`table-caption`
+
+  - `flow-root`
+
+
+
+BFC 的作用主要有以下几个方面：
+
+1. 清除浮动。在一个 BFC 中，浮动元素会被父元素完全包裹，不会溢出到外部区域。
+2. 避免 margin 重叠。在一个 BFC 中，相邻的两个元素的 margin 不会发生重叠。
+3. 创建独立的渲染环境。在一个 BFC 中，子元素的布局不会受到外部元素的影响，可以更灵活地控制布局。
+
+## 
+
+
 
 # JavaScript
 ## pnpm
@@ -703,6 +743,12 @@ CommonJS 加载的是一个对象(即module.exports属性)，该对象只有在�
 - 类的调用方式: ES6 中需要使用 new 关键字来创建类的实例，而 ES5 中类的调用方 式更加简单，只需要像函数一样调用即可。
 
  ES6 底层实现上仍然是基于原型链
+
+## xhr fetch axios
+
+[xhr mdn](https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest)
+
+
 
 # 手写
 
@@ -1252,7 +1298,7 @@ HTTP/1.1 相比 HTTP/1.0 性能上的改进：
 
 但 HTTP/1.1 还是有性能瓶颈：
 
--   请求 / 响应头部（Header）未经压缩就发送，首部信息越多延迟越大。只能压缩 `Body` 的部分；
+-   请求 / 响应头部（Header）未经压缩就发送，首部信息越多延迟越大。只能压缩 `Body` 的部分；         
 -   发送冗长的首部。每次互相发送相同的首部造成的浪费较多；
 -   服务器是按请求的顺序响应的，如果服务器响应慢，会招致客户端一直请求不到数据，也就是队头阻塞；
 -   没有请求优先级控制；
@@ -1353,6 +1399,10 @@ React 和 Vue 做的假设是：
 
 ## hooks原理
 
+### 为什么hoos不能写在if里
+
+hooks在FIber节点上是数组加链表， 按顺序维护， 执行一个hook index++，如果某些hook没有执行，顺序会被打乱
+
 
 ## Scheduler
 [ Scheduler 为什么使用 MessageChannel 实现](https://juejin.cn/post/6953804914715803678)
@@ -1363,3 +1413,21 @@ React 和 Vue 做的假设是：
 ### ISR原理
 SWR
 - [[计算机网络#stale while revalidate]]
+
+# Git
+
+## git reset revert区别
+
+`git reset` 是彻彻底底的回退，该commit之后的所有修改将完全消失，包括提交记录。
+
+**优点**：
+
+- 彻底回退到指定版本，干净清爽；
+- 提交时间线清晰，没有冗杂；
+
+**缺点**：
+
+- 记录彻底清除，无法再次恢复
+
+`git revert` revert仅仅是撤销指定commit的修改，并不影响后续的commit，但所撤销的commit被后续的commit修改了同一地方则会产生冲突；
+
