@@ -878,8 +878,6 @@ For example, if you have a file called `file1.txt` and you create a symbolic lin
 A hard link, on the other hand, is a reference to a file or directory that points directly to the data on the disk. Unlike a symbolic link, a hard link is an actual file or directory entry that is created by the operating system. Hard links are created using the `ln` command.
 For example, if you have a file called `file1.txt` and you create a hard link to it called `file2.txt`, any changes made to `file1.txt` will also be reflected in `file2.txt`, since they are both pointing to the same physical data on the disk. However, if you delete `file1.txt`, `file2.txt` will still remain on the disk, because it is a hard link to the same data.
 
-
-
 ## 什么是 Javascript 的事件流？有哪些事件流模型？
 
 JavaScript 的事件流是指浏览器中所有事件的传递和处理过程。事件流可以分为三个阶段：事件捕获、目标阶段和事件冒泡。
@@ -964,6 +962,11 @@ CommonJS 加载的是一个对象(即module.exports属性)，该对象只有在�
 ## xhr fetch axios
 
 [xhr mdn](https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest)
+
+## 遍历对象key
+- `for in` 所有可枚举的，可以遍历原型链
+- `Object.keys()` 自身可枚举的，原型链不可
+- `Object.getOwnPropertyNames()` 所有自身属性名（包括枚举和不可枚举），没有symbol
 
 
 
