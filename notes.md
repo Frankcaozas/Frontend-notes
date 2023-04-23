@@ -996,6 +996,20 @@ CommonJS 加载的是一个对象(即module.exports属性)，该对象只有在�
 
 [xhr mdn](https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest)
 
+### 取消请求
+- `xhr.abort`
+- `fetch`
+	- fetch cofig里传`AbortController.signal` , 调用`AbortController.abort()`
+- `axios`
+```js
+const CancelToken = axios.CancelToken; 
+const source = CancelToken.source();
+axios.post('/user/12345', 
+		   { name: 'new name' }, 
+		   { cancelToken: source.token })
+source.cancel()
+```
+
 ## 遍历对象key
 - `for in` 所有可枚举的，可以遍历原型链
 - `Object.keys()` 自身可枚举的，原型链不可
@@ -1382,7 +1396,11 @@ function mu_new(fn,...arg){
     return result instanceof Object ? result : obj;
 }
 ```
+## compose
+```js
 
+
+```
 ## 用setTimeout实现setInterval  
 setInterval计时可能不准确，原因是setInterval的回调需要等到系统计算资源空闲下来才会执行，并且下一次触发时间是在setInterval回调执行完毕之后才开始计时。如果setInterval内执行的计算过于耗时，或者有其他耗时任务在执行，会导致setInterval计时不准。  
 
