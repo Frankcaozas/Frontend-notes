@@ -138,7 +138,12 @@ https://q.shanyue.tech/fe/dom/447.html#%E4%B8%80%E4%B8%AA-jsonp-%E8%AF%B7%E6%B1%
 ### get post
 
 get参数长度限制不是因为http协议的限制，不同的浏览器有不同的限制
+### options请求
 
+1.  检测服务器支持的请求方法
+2.  CORS 中的预检请求
+
+可以设置`Access-Control-Max-Age`这个属性。让浏览器缓存，在缓存的有效期内，所有options请求都不会发送。优化性能。
 
 ### 强制缓存
 [强制缓存](https://xiaolincoding.com/network/2_http/http_interview.html#%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%BA%E5%88%B6%E7%BC%93%E5%AD%98)
