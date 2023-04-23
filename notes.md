@@ -809,13 +809,23 @@ id选择器（#id）	               100
 
   - `flow-root`
 
-
-
 BFC 的作用主要有以下几个方面：
 
 1. 清除浮动。在一个 BFC 中，浮动元素会被父元素完全包裹，不会溢出到外部区域。
 2. 避免 margin 重叠。在一个 BFC 中，相邻的两个元素的 margin 不会发生重叠。
 3. 创建独立的渲染环境。在一个 BFC 中，子元素的布局不会受到外部元素的影响，可以更灵活地控制布局。
+## 画三角形
+```css
+/* 不设置border-bottom即可 */
+/*  transparent 透明*/
+.caret {
+  width: 0;
+  height: 0;
+  border-top: 50px solid black;
+  border-right: 50px solid transparent;
+  border-left: 50px solid transparent;
+}
+```
 
 ## 布局
 
