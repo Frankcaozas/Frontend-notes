@@ -1183,7 +1183,7 @@ const myPromiseSettled = (items) => {
   );
 };
 ```
-## race
+### race
 ```js
 const promiseRace = (promises) => {
   return new Promise((resolve, reject) => {
