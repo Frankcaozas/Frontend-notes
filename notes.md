@@ -120,6 +120,9 @@ TCP 建立连接时，通过三次握手**能防止历史连接的建立，能�
 -   「**501 Not Implemented**」表示客户端请求的功能还不支持，类似“即将开业，敬请期待”的意思。
 -   「**502 Bad Gateway**」通常是服务器作为网关或代理时返回的错误码，表示服务器自身工作正常，访问后端服务器发生了错误。
 -   「**503 Service Unavailable**」表示服务器当前很忙，暂时无法响应客户端，类似“网络服务正忙，请稍后重试”的意思。
+### http常见头部
+
+
 ### 跨域解决方法
 
 -   题目：[什么是跨域，如何解决](https://q.shanyue.tech/fe/dom/216.html)
@@ -374,6 +377,14 @@ document.cookie = 'a=3; max-age=-1'
 ```
 
 同时，也可以使用最新关于 cookie 操作的 API: [CookieStore API](https://developer.mozilla.org/en-US/docs/Web/API/CookieStore) 其中的 `cookieStore.delete(name)` 删除某个 cookie(HTTPS才能用)
+
+### cookie localstorage sessionstorage
+
+|         | cookie   | localstorage | sessionstorage|
+|  ----   | ----      |     ----     |        ---- |  
+| 大小     | 4kb       |      2.5MB-10MB    |2.5MB-10MB |
+| 跟随http发送  | 会 |      不      |        不       | 
+ 时间                    可设置     永久                     会话关闭删除
 
 
 ## 块级元素 行内元素 块级行内元素
@@ -836,6 +847,12 @@ BFC 的作用主要有以下几个方面：
 1. 清除浮动。在一个 BFC 中，浮动元素会被父元素完全包裹，不会溢出到外部区域。
 2. 避免 margin 重叠。在一个 BFC 中，相邻的两个元素的 margin 不会发生重叠。
 3. 创建独立的渲染环境。在一个 BFC 中，子元素的布局不会受到外部元素的影响，可以更灵活地控制布局。
+
+## dislay: none 和 visibility: none
+display:none会将元素从页面中完全移除，不占据任何空间；visibility:none则会将元素隐藏，但仍然占据空间。
+
+对于动画，display:none会使动画无法执行，而visibility:none则可以执行动画。
+
 ## 画三角形
 ```css
 /* 不设置border-bottom即可 */
