@@ -255,7 +255,7 @@ UDP 发送是不管顺序，也不管丢包的，所以不会出现像 HTTP/2 �
 CA 签发证书的过程，如上图左边部分：
 
 -   首先 CA 会把持有者的公钥、用途、颁发者、有效时间等信息打成一个包，然后对这些信息进行 Hash 计算，得到一个 Hash 值；
--   然后 CA 会使用自己的私钥将该 Hash 值加密，生成 Certificate Signature，也就是 CA 对证书做了签名；
+-   然后 CA 会使用自己的私钥将该 Hash 值加密，生成 Certificate Signature(签名)
 -   最后将 Certificate Signature 添加在文件证书上，形成数字证书；
 
 客户端校验服务端的数字证书的过程，如上图右边部分：
@@ -848,7 +848,10 @@ BFC 的作用主要有以下几个方面：
   border-left: 50px solid transparent;
 }
 ```
-
+## flex
+容器属性
+- flex-direction 
+- 
 ## 布局
 
 ### 水平居中
