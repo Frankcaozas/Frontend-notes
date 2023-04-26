@@ -849,9 +849,29 @@ BFC 的作用主要有以下几个方面：
 }
 ```
 ## flex
-容器属性
-- flex-direction 
-- 
+**容器属性**
+- `flex-direction `
+- `justify-content` 主轴对齐方式
+	- `flex-start`
+	- `flex-end`
+	- `cneter`
+	- `space-between/around/evenly`
+- `align-items` 交叉轴对齐方式
+	- `flex-start`
+	- `flex-end`
+	- `cneter`
+	- `baseline`
+	- `stretch`
+- `flex-wrap` 默认不换行
+- `align-content` 如果有多行，定义在交叉轴对齐方式
+**子元素属性**
+- `order` 排序
+- `align self`单独的交叉轴对齐方式
+- `flex` 包括 `grow shrink basis`
+	- **默认 0 1 auto**
+	- **flex 1 ：1 1 0**
+	- **flex auto: 1 1 auto** 
+
 ## 布局
 
 ### 水平居中
@@ -887,18 +907,6 @@ BFC 的作用主要有以下几个方面：
 -   绝对定位：子绝父相，左右leftright各为0，top为0，中间设margin
 -   flex布局：父元素display:flex，中间子元素flex:1
 
-
-### flex:1的意义？
-
-flex是flex-grow（项目的放大比例），flex-shrink（项目的缩小比例），flex-basis（在分配多余空间之前，项目占据的主轴空间）的简写，默认为0 1 auto。
-
-当一个容器设display:flex变成一个flex容器后，先根据flex-basis计算各元素在主轴上的初始尺寸大小。如果容器没有被占满（有剩余空间），则flex-grow起作用。若空间不足，则flex-shrink起作用。
-
-总而言之，计算时先根据flex-basis分配，后续再视情况flex-grow或者flex-shrink起作用。
-
-**flex:1等价于flex:1 1 0%**，经常用作自适应布局，设父容器的display:flex，侧边栏大小固定后，设中间内容区flex:1，内容区会自动放大占满剩余空间
-
-**flex:auto等价于flex:1 1 auto**
 
 
 
