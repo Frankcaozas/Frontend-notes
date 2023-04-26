@@ -249,6 +249,21 @@ UDP 发送是不管顺序，也不管丢包的，所以不会出现像 HTTP/2 �
 之后客户端使用对称密钥解密服务器响应的数据，完成 HTTPS 连接。
 
 在 HTTPS 连接中，SSL/TLS 协议扮演着重要的角色，它使用**非对称**加密和**对称**加密结合的方式，保证了数据传输的安全性和完整性。此外，证书机构的身份验证也是保障 HTTPS 连接的安全性的一个重要环节。
+
+#### 证书验证
+![[Pasted image 20230426192046.png]]
+CA 签发证书的过程，如上图左边部分：
+
+-   首先 CA 会把持有者的公钥、用途、颁发者、有效时间等信息打成一个包，然后对这些信息进行 Hash 计算，得到一个 Hash 值；
+-   然后 CA 会使用自己的私钥将该 Hash 值加密，生成 Certificate Signature，也就是 CA 对证书做了签名；
+-   最后将 Certificate Signature 添加在文件证书上，形成数字证书；
+
+客户端校验服务端的数字证书的过程，如上图右边部分：
+
+-   首先客户端会使用同样的 Hash 算法获取该证书的 Hash 值 H1；
+-   通常浏览器和操作系统中集成了 CA 的[公钥信息](https://www.zhihu.com/search?q=%E5%85%AC%E9%92%A5%E4%BF%A1%E6%81%AF&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A1914075935%7D)，浏览器收到证书后可以使用 CA 的[公钥解密](https://www.zhihu.com/search?q=%E5%85%AC%E9%92%A5%E8%A7%A3%E5%AF%86&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A1914075935%7D) Certificate Signature 内容，得到一个 Hash 值 H2 ；
+-   最后比较 H1 和 H2，如果值相同，则为可信赖的证书，否则则认为证书不可信。
+
 #### 中间人攻击
 HTTPS 在用户主动信任了伪造证书的时候也会发生中间人攻击
 
