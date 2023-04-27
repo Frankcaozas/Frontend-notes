@@ -121,7 +121,16 @@ TCP 建立连接时，通过三次握手**能防止历史连接的建立，能�
 -   「**502 Bad Gateway**」通常是服务器作为网关或代理时返回的错误码，表示服务器自身工作正常，访问后端服务器发生了错误。
 -   「**503 Service Unavailable**」表示服务器当前很忙，暂时无法响应客户端，类似“网络服务正忙，请稍后重试”的意思。
 ### http常见头部
-
+User-Agent：发送请求的用户代理应用程序的名称和版本号
+Host：被请求资源的主机名和端口号
+Accept：可以接受的MIME类型列表
+Accept-Language：可以接受的自然语言列表
+Accept-Encoding：可以接受的内容编码列表
+Connection：请求完成后是否关闭连接
+Content-Type：请求或响应的实体的媒体类型
+Content-Length：请求或响应的实体的长度（以字节为单位）
+Cache-Control：缓存指令，指示请求/响应是否可以缓存
+Cookie：包含与HTTP请求关联的cookie数据
 
 ### 跨域解决方法
 
