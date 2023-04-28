@@ -1403,7 +1403,7 @@ function isEqual(x, y) {
 }
 ```
 
-## String.prototype.trim
+## String.prototype.trim 
 
 -   题目: [如何去除字符串首尾空白字符](https://github.com/shfshanyue/Daily-Question/issues/667)
 
@@ -1427,7 +1427,6 @@ function debonce(fn: Function, time: number){
 			fn(...args)
 		}, time)
 	}
-	
 }
 ```
 ## throttle 节流
