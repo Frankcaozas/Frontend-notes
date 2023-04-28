@@ -1201,6 +1201,34 @@ return new Prom((resolve, reject) => reject('Error')).catch((e) => {
 })
 ```
 ### async await原理
+
+```ts
+function myAsync(fn) {
+  return function () {
+    const gen = fn()
+    return new Promise((resolve, reject) => {
+      
+      let result
+      function next(key, value) {
+        try {
+          result = gen[key](value)
+        } catch (err) {
+          reject(err)
+        }
+        if (result.done) {
+          resolve(result.value)
+        } else {
+          return Promise.resolve(result.value).then(
+            (val) => next('next', val),
+            (err) => next('throw', err)
+          )
+        }
+      }
+      next('next')
+    })
+  }
+}
+```
 ### Promise.all
 
 -   代码: [Promise.all](https://codepen.io/shanyue/pen/JjWEqBL?editors=0012)
