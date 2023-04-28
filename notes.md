@@ -874,6 +874,7 @@ display:none会将元素从页面中完全移除，不占据任何空间；visib
   border-left: 50px solid transparent;
 }
 ```
+
 ## flex
 **容器属性**
 - `flex-direction `
