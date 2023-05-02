@@ -1,4 +1,4 @@
-我是szy，目前大三，就读于西南交通大学，主要学习前端方向。技术栈方面， 我熟悉JavaScript， ES6， 熟悉计算机网络和HTTP协议，掌握常用的数据结构与算法。框架我主要学习的是React生态， 并对Fiber 架构有一定的了解。我的第一个项目react-routerfly实现了React的跨路由动画组件，支持任意布局方式。其核心思想是将组件提升到根节点，并用代理组件获取真实组件的位置，props等信息生成过度动效，并在动画结束后用createPortal将其传回真实的节点位置。第二个项目实现了mini版的vue/Reactivity 和 React，其中vue/Reactivity具备ref reactive effect函数， React使用Fiber数据结构和rlc实现了可中断的diff更新算法 ， 并具备Function Component和useState hook的基本功能
+
 # 网络
 ## 键入网址到网页显示，期间发生了什么
 - 1.输入url
