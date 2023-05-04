@@ -1191,72 +1191,60 @@ Function.prototype.fakeBind = function(obj, ...args) {
 }
 ```
 ## Promise
-### [实现promise](https://zhuanlan.zhihu.com/p/58428287)
+### [实现promise]
+(https://zhuanlan.zhihu.com/p/58428287)
 ```js
-class Prom {
-  static resolve(value) {
-    if (value && value.then) {
-      return value
-    }
-    return new Prom((resolve) => resolve(value))
+class myPromise {
+  static resolve(val) {
+    if (val && val.then) return val
+    return new myPromise((resolve) => resolve(val))
   }
-
   constructor(fn) {
+    this.resolveCallbacks = []
+    this.rejectCallbacks = []
+    this.error = undefined
+    this.state = 'pending'
     this.value = undefined
-    this.reason = undefined
-    this.status = 'PENDING'
-
-    // 维护一个 resolve/pending 的函数队列
-    this.resolveFns = []
-    this.rejectFns = []
-
-    const resolve = (value) => {
-      // 注意此处的 setTimeout
+    const resolve = (val) => {
       setTimeout(() => {
-        this.status = 'RESOLVED'
-        this.value = value
-        this.resolveFns.forEach(({ fn, resolve: res, reject: rej })     =>   res(fn(value))
-        )
+        this.value = val
+        this.state = 'fulfilled'
+        this.resolveCallbacks.forEach(({fn, resolve:res, reject: rej}) => {
+          res(fn(this.value)) // 应该把fn放入微任务队列
+        })
       })
     }
-
-    const reject = (e) => {
-      setTimeout(() => {
-        this.status = 'REJECTED'
-        this.reason = e
-        this.rejectFns.forEach(({ fn, resolve: res, reject: rej }) =>
-          rej(fn(e))
-        )
+    const reject = (error) => {
+      this.error = error
+      this.state = 'rejected'
+      this.rejectCallbacks.forEach(({fn, resolve:res, reject: rej})=>{
+        rej(fn(this.error))
       })
     }
-
     fn(resolve, reject)
   }
 
   then(fn) {
-    if (this.status === 'RESOLVED') {
+    if (this.state === 'fulfilled') {
       const result = fn(this.value)
       // 需要返回一个 Promise
-      // 如果状态为 resolved，直接执行
-      return Prom.resolve(result)
+      // 如果状态为 resolved，直接执行（直接推入微任务队列）
+      return myPromise.resolve(result)
     }
-    if (this.status === 'PENDING') {
-      // 也是返回一个 Promise
-      return new Prom((resolve, reject) => {
-        // 推进队列中，resolved 后统一执行
-        this.resolveFns.push({ fn, resolve, reject })
+    if (this.state === 'pending') {
+      return new myPromise((resolve, reject)=>{
+        this.resolveCallbacks.push({fn, resolve, reject})
       })
     }
   }
-
-  catch(fn) {
-    if (this.status === 'REJECTED') {
-      const result = fn(this.value)
-      return Prom.resolve(result)
+  catch(fn){
+    if (this.state === 'rejected') {
+      const result = fn(this.error)
+      return myPromise.resolve(result)
     }
-    if (this.status === 'PENDING') {
-      return new Prom((resolve, reject) => {
-        this.rejectFns.push({ fn, resolve, reject })
+    if (this.state === 'pending') {
+      return new myPromise((resolve, reject)=>{
+        this.rejectCallbacks.push({fn, resolve, reject})
       })
     }
   }
