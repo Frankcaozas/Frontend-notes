@@ -1504,11 +1504,11 @@ const compose = (...fns) =>
 setInterval计时可能不准确，原因是setInterval的回调需要等到系统计算资源空闲下来才会执行，并且下一次触发时间是在setInterval回调执行完毕之后才开始计时。如果setInterval内执行的计算过于耗时，或者有其他耗时任务在执行，会导致setInterval计时不准。  
 
 ```ts
-const mySetInterval = (fn, delay) => {
-    setTimeout(() => {
-        fn()
-        setTimeout(arguments.callee, delay/2)
-    }, delay/2)
+function mySetInterval(func, interval) {
+  setTimeout(function() {
+    func();
+    mySetInterval(func, interval);
+  }, interval);
 }
 mySetInterval(() => console.log(1), 1000)
 ```
