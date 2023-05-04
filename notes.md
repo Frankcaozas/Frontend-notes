@@ -1158,6 +1158,37 @@ source.cancel()
 - `Object.keys()` 自身可枚举的，原型链不可
 - `Object.getOwnPropertyNames()` 所有自身属性名（包括枚举和不可枚举），没有symbol
 
+## 事件循环
+Js异步、事件循环与消息队列、微任务与宏任务
+[https://zhuanlan.zhihu.com/p/139967525](https://zhuanlan.zhihu.com/p/139967525)
+
+await 后面的是微任务
+```js
+async function async1() {
+  console.log(1);
+  await async2(); // async2立即执行，1之后立刻打印3
+  console.log(2);
+}
+async function async2() {
+  console.log(3);
+}
+async1();
+setTimeout(() => console.log(4), 0);
+new Promise(resolve => {
+  resolve();
+  console.log(5);
+}).then(() => {
+  console.log(6);
+  Promise.resolve().then(()=>{
+    console.log(7);
+  });
+});
+console.log(8);
+// 1 3 5 8 2 6 7 4
+```
+
+resolve 一个promise要等其他微任务先执行2个
+- https://q.shanyue.tech/fe/js/727.html
 
 
 # 手写
