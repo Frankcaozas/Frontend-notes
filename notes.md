@@ -1200,7 +1200,29 @@ console.log(8);
 
 resolve 一个promise要等其他微任务先执行2个
 - https://q.shanyue.tech/fe/js/727.html
+## 异常
+在前端开发中，要及时捕获异常并进行处理，可以采取以下方法：
 
+1.  使用try-catch语句：在可能发生异常的代码块中使用try-catch语句包裹起来。这样，如果try块中的代码发生异常，就会立即跳转到catch块中执行相应的处理逻辑。在catch块中，你可以记录错误信息、显示错误提示或者进行其他的异常处理。
+
+
+```js
+try {   // 可能发生异常的代码 } 
+catch (error) {   // 异常处理逻辑 }
+```
+
+
+2.  window.onerror事件：window对象上有一个`onerror`事件，可以用于全局捕获未被捕获的异常。你可以通过给`window.onerror`赋值一个函数来处理异常，当发生未被捕获的异常时，该函数会被调用。你可以在这个函数中记录异常信息或者进行其他的处理。
+
+`window.onerror = function(message, source, lineno, colno, error) {   // 异常处理逻辑 };`
+
+3.  使用Promise.catch()方法：如果你的代码中使用了Promise对象，可以通过Promise.catch()方法捕获Promise链中的异常。在catch()方法中可以处理异常，也可以继续抛出新的异常。
+
+`yourPromise()   .then(result => {     // 处理成功的逻辑   })   .catch(error => {     // 异常处理逻辑   });`
+
+4.  监听unhandledrejection事件：当Promise被reject并且没有被catch时，会触发unhandledrejection事件。你可以通过监听该事件来捕获未被处理的Promise异常。
+
+`window.addEventListener('unhandledrejection', event => {   // 异常处理逻辑 });`
 
 # 手写
 
