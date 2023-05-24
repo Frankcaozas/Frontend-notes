@@ -1022,6 +1022,14 @@ display:none会将元素从页面中完全移除，不占据任何空间；visib
 
 
 # JavaScript
+## 基本数据类型
+-   string
+-   number
+-   bigint
+-   boolean
+-   undefined
+-   symbol
+-   null
 ## pnpm
 ### 好处
 -   幽灵依赖解决 
@@ -1168,6 +1176,7 @@ source.cancel()
 - `for in` 所有可枚举的，可以遍历原型链
 - `Object.keys()` 自身可枚举的，原型链不可
 - `Object.getOwnPropertyNames()` 所有自身属性名（包括枚举和不可枚举），没有symbol
+- `Reflect.ownKeys() 包括getOwnPropertyNames() + getOwnPropertySymbols()`
 
 ## 事件循环
 Js异步、事件循环与消息队列、微任务与宏任务
