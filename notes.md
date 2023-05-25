@@ -1458,6 +1458,21 @@ function flatten (list, depth = 1) {
   return list.reduce((a, b) => a.concat(Array.isArray(b) ? flatten(b, depth - 1) : b), [])
 }
 ```
+
+
+
+
+
+
+
+
+
+```js
+function flatt(arr, depth){
+	if(depth === 0 )return arr
+	arr.reduce((pre, val,[])=> pre.concat(Array.isArray(val) ? flatt(val, depth-1) : val))
+}
+```
 ### Array.prototype.reduce 
 
 -   代码: [Array.prototype.reduce](https://codepen.io/shanyue/pen/dyWmLgQ?editors=0012)
