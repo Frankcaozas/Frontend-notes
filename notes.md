@@ -82,6 +82,7 @@ TCP 建立连接时，通过三次握手**能防止历史连接的建立，能�
 [why](https://xiaolincoding.com/network/3_tcp/tcp_interview.html#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B-%E4%B8%8D%E6%98%AF%E4%B8%A4%E6%AC%A1%E3%80%81%E5%9B%9B%E6%AC%A1)
 ### 四次挥手
 ![[Pasted image 20230413125601.png]]
+![[Pasted image 20230525220705.png]]
 [四次挥手过程](https://xiaolincoding.com/network/3_tcp/tcp_interview.html#tcp-%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%BF%87%E7%A8%8B%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84)
 ####  为什么挥手需要四次？
 
@@ -156,7 +157,7 @@ Cookie：包含与HTTP请求关联的cookie数据
 **协议**，**域名**，**端口**，三者有一不一样，就是跨域
 
 案例一：`www.baidu.com` 与 `zhidao.baidu.com` 是跨域
-
+二： localhost duan'kou'bu
 目前有两种最常见的解决方案：
 
 1.  CORS，在服务器端设置几个响应头，如 `Access-Control-Allow-Origin: *`
