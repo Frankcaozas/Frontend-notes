@@ -157,7 +157,7 @@ Cookie：包含与HTTP请求关联的cookie数据
 **协议**，**域名**，**端口**，三者有一不一样，就是跨域
 
 案例一：`www.baidu.com` 与 `zhidao.baidu.com` 是跨域
-二： localhost duan'kou'bu
+二： localhost 端口不同也算
 目前有两种最常见的解决方案：
 
 1.  CORS，在服务器端设置几个响应头，如 `Access-Control-Allow-Origin: *`
