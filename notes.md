@@ -1178,6 +1178,52 @@ source.cancel()
 - `Object.getOwnPropertyNames()` 所有自身属性名（包括枚举和不可枚举），没有symbol
 - `Reflect.ownKeys() 包括getOwnPropertyNames() + getOwnPropertySymbols()`
 
+## for in for of 
+`for...in` 和 `for...of` 是 JavaScript 中用于迭代对象和数组的循环结构，但它们在用法和迭代的方式上有所不同。
+
+`for...in` 循环用于遍历对象的可枚举属性。它会迭代对象及其原型链上的所有可枚举属性，并将属性名赋值给循环变量。这意味着除了遍历对象自身的属性，还会遍历继承的属性。这是因为对象在 JavaScript 中是通过原型链连接的。
+
+`for...of` 循环用于遍历可迭代对象（例如数组、字符串、Set、Map 等）中的元素。它遍历对象自身的属性，而不涉及原型链。对于每次迭代，它将对象的值赋给循环变量。
+
+
+## 原型链
+以下是使用 ES5 的语法手写一个类的继承的示例：
+
+```js
+// 父类
+function Animal(name) {
+  this.name = name;
+}
+
+Animal.prototype.sayName = function() {
+  console.log(this.name);
+}
+
+// 子类
+function Dog(name, breed) {
+  Animal.call(this, name); // 调用父类构造函数，设置子类实例的属性
+  this.breed = breed;
+}
+
+// 子类继承父类的原型
+Dog.prototype = Object.create(Animal.prototype);
+
+// 修复子类的构造函数引用
+Dog.prototype.constructor = Dog;
+
+Dog.prototype.bark = function() {
+  console.log("Woof!");
+}
+
+// 创建子类实例
+var myDog = new Dog("Max", "Labrador");
+myDog.sayName(); // 输出: Max
+myDog.bark();    // 输出: Woof!
+```
+*为什么要写prototype.constructor*
+在上述示例中，通过将子类的原型对象设置为父类的一个实例（通过 `Object.create()` 方法），子类就能继承父类的原型属性和方法。然后，为了修复子类的构造函数引用，我们将 `prototype.constructor` 设置为子类本身。
+
+如果不手动修复 `prototype.constructor`，它将指向父类的构造函数。这意味着当你尝试创建子类实例时，实际上会调用父类的构造函数来创建一个父类实例，而不是子类实例。这通常会导致错误的行为和预期之外的结果。因此，为了确保正确的继承关系，我们需要手动修复 `prototype.constructor`。
 ## 事件循环
 Js异步、事件循环与消息队列、微任务与宏任务
 [https://zhuanlan.zhihu.com/p/139967525](https://zhuanlan.zhihu.com/p/139967525)
