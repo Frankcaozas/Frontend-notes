@@ -1263,6 +1263,23 @@ Function.prototype.fakeBind = function(obj, ...args) {
   return (...rest) => this.call(obj, ...args, ...rest)
 }
 ```
+
+```js
+//如果想new bind后的函数
+Function.prototype.mybind = function (ctx, ...args) {
+  const fn = this
+
+  const bindFn = function (...rest) {
+    if(this instanceof bindFn){//new 的情况
+      return new bindFn(...args, ...rest)
+    }
+    return fn.call(ctx, ...args, ...rest)
+  }
+  return bindFn
+}
+```
+
+
 ## Promise
 ### [实现promise]
 (https://zhuanlan.zhihu.com/p/58428287)
@@ -1458,19 +1475,11 @@ function flatten (list, depth = 1) {
   return list.reduce((a, b) => a.concat(Array.isArray(b) ? flatten(b, depth - 1) : b), [])
 }
 ```
-
-
-
-
-
-
-
-
-
+重写：
 ```js
-function flatt(arr, depth){
+function flatt(arr, depth = 1){
 	if(depth === 0 )return arr
-	arr.reduce((pre, val,[])=> pre.concat(Array.isArray(val) ? flatt(val, depth-1) : val))
+	arr.reduce((pre, val)=> pre.concat(Array.isArray(val) ? flatt(val, depth-1) : val), [])
 }
 ```
 ### Array.prototype.reduce 
@@ -1493,6 +1502,7 @@ const reduce = (list, fn, ...init) => {
 1.  回调函数中第一个 Index 是多少？
 2.  数组为稀疏数组如何处理？
 注意，flatten 拥有第二个参数 depth
+
 ## sleep/delay
 
 -   题目: [【Q435】JS 如何实现一个 sleep/delay 函数](https://github.com/shfshanyue/Daily-Question/issues/442)
