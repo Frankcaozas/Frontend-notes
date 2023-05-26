@@ -826,6 +826,7 @@ id选择器（#id）	               100
 伪元素选择器	                1
 子选择器、相邻选择器	0
 通配符选择器（*）	        0
+
 ### 变化优先级
 相邻选择器（h1+p）  
 子选择器（ul>li）  
@@ -870,7 +871,6 @@ id选择器（#id）	               100
     -   `position: absolute`
     -   `left/top: 50%`
     -   `transform: translate(50%)`
--   ##absolute/inset##
 
 ## 左侧固定、右侧自适应
 
@@ -921,12 +921,10 @@ id选择器（#id）	               100
   - `right`
 
 - position
-
-  - `absolute``
+  - `absolute`
   - ``fixed`
 
 - `display`
-
   - `inline-block`
   - `flex、inline-flex`
 
