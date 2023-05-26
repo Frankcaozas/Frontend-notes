@@ -1717,9 +1717,6 @@ function mySetInterval(func, interval) {
 mySetInterval(() => console.log(1), 1000)
 ```
 # React
-
-
-
 ## Fiber Architecture
 https://github.com/acdlite/react-fiber-architecture
 
