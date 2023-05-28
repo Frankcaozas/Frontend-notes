@@ -1677,6 +1677,29 @@ function throttle(fn: Function, time: number ){
 	}
 }
 ```
+
+## 分割url参数
+- 1.使用 `URLSearchParams`
+```js
+const urlParams = new URLSearchParams(window.location.search);
+const paramValue = urlParams.get('paramName');
+```
+- 2. 
+```js
+function getQueryParam(url) {
+  const params = {};
+  const searchParams = url.split('?')[1];
+  if (!searchParams) {
+    return null;
+  }
+
+  searchParams.split('&').forEach((param) => {
+    const [key, value] = param.split('=');
+    params[key] = decodeURIComponent(value);
+  });
+
+  return params
+}```
 ## curry 函数科里化
 ```ts
 function curry(fn, ...args) {
