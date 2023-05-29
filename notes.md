@@ -1809,6 +1809,7 @@ React 和 Vue 做的假设是：
 ### 为什么hoos不能写在if里
 
 hooks在FIber节点上是数组加链表， 按顺序维护， 执行一个hook index++，如果某些hook没有执行，顺序会被打乱
+### hooks优点
 
 
 ## Scheduler
@@ -1855,7 +1856,7 @@ Git rebase 是一个常用的 Git 命令，它可以将一个分支的提交记�
 
 总之，git rebase 是一个非常有用的 Git 命令，它可以使提交历史更加清晰、有条理，让代码维护更加简单、易于理解。
 
-# 性能优化
+# 场景发散题
 
 ## 首屏优化
 - 压缩代码
@@ -1870,3 +1871,38 @@ Git rebase 是一个常用的 Git 命令，它可以将一个分支的提交记�
 代码方面：防抖节流，虚拟滚动，ssr服务端渲染
 
 部署方面：开启http2，开启gzip压缩
+
+## 页面瀑布滚动加载，如何监听一个用户在各个模块停留的时间
+*通过scroll事件和getBoundingClientRect实现*
+
+```js
+// 记录模块的停留时间
+const moduleTimes = {};
+
+// 监听滚动事件
+window.addEventListener('scroll', function() {
+  // 获取所有模块元素
+  const modules = document.querySelectorAll('.module');
+
+  // 遍历每个模块
+  modules.forEach(module => {
+    // 检查模块是否在可视区域内
+    const rect = module.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight && rect.bottom >= 0;
+
+    if (isVisible) {
+      // 模块进入可视区域，记录当前时间戳
+      if (!moduleTimes[module.id]) {
+        moduleTimes[module.id] = Date.now();
+      }
+    } else {
+      // 模块离开可视区域，计算停留时间并清除记录
+      if (moduleTimes[module.id]) {
+        const stayTime = Date.now() - moduleTimes[module.id];
+        console.log(`模块 ${module.id} 的停留时间为 ${stayTime} 毫秒`);
+        delete moduleTimes[module.id];
+      }
+    }
+  });
+});
+```
