@@ -312,7 +312,7 @@ CA 签发证书的过程，如上图左边部分：
 
 **1、端口**：http端口号是 80；https端口号是 443
 
-**2、传输协议**：https在http和tcp之间加入了TLS/SSL层
+**2、握手**：https在tcp三次握手后还需要TLS握手
 
 **3、安全性**：https使用了TLS/SSL加密，比http更加的安全， http明文传输
 
