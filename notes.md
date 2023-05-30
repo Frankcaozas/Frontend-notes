@@ -1358,7 +1358,7 @@ Function.prototype.mybind = function (ctx, ...args) {
 
   const bindFn = function (...rest) {
     if(this instanceof bindFn){//new 的情况
-      return new bindFn(...args, ...rest)
+      return new fn(...args, ...rest)
     }
     return fn.call(ctx, ...args, ...rest)
   }
