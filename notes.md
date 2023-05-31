@@ -1756,7 +1756,8 @@ function getQueryParam(url) {
   });
 
   return params
-}```
+}
+```
 ## curry 函数科里化
 ```ts
 function curry(fn, ...args) {
