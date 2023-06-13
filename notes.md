@@ -85,6 +85,15 @@ TCP 建立连接时，通过三次握手**能防止历史连接的建立，能�
 ![format,png-20230309230614791](https://cdn.xiaolincoding.com//mysql/other/format,png-20230309230614791.png)
 [四次挥手过程](https://xiaolincoding.com/network/3_tcp/tcp_interview.html#tcp-%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%BF%87%E7%A8%8B%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84)
 
+
+
+### 为什么time-wait要等待2MSL
+
+1. `确保完全关闭连接`：TIME_WAIT状态的等待时间是为了确保网络中所有的报文段都被接收和处理完毕。在关闭连接后，可能仍然有之前的报文段在网络中延迟到达，如果立即关闭连接，这些延迟到达的报文段可能会被后续的连接误认为是属于当前连接的报文，从而导致数据混乱或错误。
+2. `避免旧连接的报文与新连接重叠`：TIME_WAIT状态还可以避免旧连接的报文与新连接重叠。TCP协议使用端口号来标识连接，而端口号在一段时间后才能被重复使用。等待2倍的MSL时间可以确保旧连接的所有报文都被网络丢弃，使得相同端口号可以安全地用于新的连接。
+
+根据TCP规范，MSL通常被设置为`2分钟（120秒）`。因此，`TIME_WAIT`状态的等待时间通常为`4`分钟（2倍的MSL）。这个时间可能会因操作系统的设置而有所不同，但通常不建议缩短这个等待时间，以确保网络稳定和正确性。
+
 ####  为什么挥手需要四次？
 
 再来回顾下四次挥手双方发 `FIN` 包的过程，就能理解为什么需要四次了。
@@ -142,6 +151,7 @@ https://xiaolincoding.com/network/3_tcp/tcp_feature.html#%E9%87%8D%E4%BC%A0%E6%9
 -    **401：Unauthorized** 身份未验证
 -   「**403 Forbidden**」禁止访问资源，
 -   「**404 Not Found**」资源不存在
+-   **405 Method Not Allowed** 方法不允许
 
 `5xx` 类状态码表示客户端请求报文正确，但是**服务器处理时内部发生了错误**，属于服务器端的错误码。
 
@@ -182,10 +192,38 @@ https://q.shanyue.tech/fe/dom/447.html#%E4%B8%80%E4%B8%AA-jsonp-%E8%AF%B7%E6%B1%
 get参数长度限制不是因为http协议的限制，不同的浏览器有不同的限制
 ### options请求
 
+### 作用
+
 1.  检测服务器支持的请求方法
 2.  CORS 中的预检请求
 
 可以设置`Access-Control-Max-Age`这个属性。让浏览器缓存，在缓存的有效期内，所有options请求都不会发送。优化性能。
+
+####  会发起options请求的情况
+
+1. 使用了一些非简单请求方法（如PUT、DELETE）进行跨域请求。
+2. 使用了一些非简单请求头（例如自定义的请求头）进行跨域请求。
+3. 使用了XMLHttpRequest或Fetch API发送跨域请求，并且请求中设置了`withCredentials`属性为`true`，表示带上凭证（如Cookie）。
+
+`同时满足2个条件，就是简单请求 `
+
+（1) 请求方法是以下三种方法之一：
+
+- HEAD
+- GET
+- POST
+
+（2）HTTP的头信息不超出以下几种字段：
+
+- Accept
+- Accept-Language
+- Content-Language
+- Last-Event-ID
+- Content-Type：只限于三个值`application/x-www-form-urlencoded`、`multipart/form-data`、`text/plain`
+
+ 参考：[阮一峰跨域资源共享 CORS 详解](https://www.ruanyifeng.com/blog/2016/04/cors.html)
+
+
 
 ### 强制缓存
 [强制缓存](https://xiaolincoding.com/network/2_http/http_interview.html#%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%BA%E5%88%B6%E7%BC%93%E5%AD%98)
@@ -402,6 +440,40 @@ CSRF（Cross-Site Request Forgery）攻击是一种利用受害者在已认证�
 4.  在敏感操作前要求用户进行身份验证：在进行敏感操作（例如更改密码或删除帐户）之前，要求用户重新进行身份验证，例如输入密码或其他证明身份的信息。
 
 # HTML&浏览器
+
+## 回流 重绘
+
+`回流触发时机`
+
+- 页面初始渲染，这是开销最大的一次回流，并且避免不了；
+
+- 添加或删除可见的 DOM 元素；
+
+- 元素的位置发生变化；
+
+- 元素的尺寸发生变化（包括外边距、内边距、边框大小、高度和宽度等）；
+
+- 元素内容发生变化（例如文字数量、字体、图片大小等）；
+
+- 元素字体大小改变；
+
+- 改变浏览器窗口尺寸（例如 resize 事件发生时）；
+
+- 激活 CSS 伪类（例如 :hover）；
+
+- 设置 style 属性的值，因为通过设置 style 属性改变节点样式的话，每一次设置都会触发一次回流；
+
+`触发回流的属性和方法`
+
+![截屏2023-06-12 22.00.05](/Users/ziyangshao/Library/Application Support/typora-user-images/截屏2023-06-12 22.00.05.png)
+
+`重绘触发时机`
+
+- 可见性(visibility)和透明度(opacity)的改变
+- 颜色
+- 背景
+- 阴影、轮廓
+
 ## Cookie
 
 存储大小4kb
@@ -578,7 +650,7 @@ HTML5 引入了一些新的语义化标签，这些标签旨在更好地描述�
  <textarea>     // 多行的文本输入控件
  <tt>     // 打字机或者等宽的文本效果
  <var>    // 定义变量
-复制代码
+
 ```
 
 #### 3. 行内块级元素 inline-block
@@ -594,7 +666,7 @@ HTML5 引入了一些新的语义化标签，这些标签旨在更好地描述�
 <textarea> 
 <select> 
 <img>
-复制代码
+
 ```
 
 #### 4. 元素类型转换 display
@@ -1404,7 +1476,7 @@ class myPromise {
     this.state = 'pending'
     this.value = undefined
     const resolve = (val) => {
-      setTimeout(() => {
+      queueMicroTask(() => {
         this.value = val
         this.state = 'fulfilled'
         this.resolveCallbacks.forEach(({fn, resolve:res, reject: rej}) => {
@@ -1795,22 +1867,29 @@ const compose = (...fns) =>
 setInterval计时可能不准确，原因是setInterval的回调需要等到系统计算资源空闲下来才会执行，并且下一次触发时间是在setInterval回调执行完毕之后才开始计时。如果setInterval内执行的计算过于耗时，或者有其他耗时任务在执行，会导致setInterval计时不准。  
 
 ```ts
-function mySetInterval(func, interval) {
-  setTimeout(function() {
-    func();
-    mySetInterval(func, interval);
-  }, interval);
+function mySetInterval(fn, time){
+  let timer 
+  const call = ()=>{
+     timer = setTimeout(() => {
+      fn()
+      timer = call(fn, time)
+    }, time);
+    return timer
+  }
+  call()
+  
+  return ()=>{clearTimeout(timer)} // return 一个clear 函数停止计时
 }
-mySetInterval(() => console.log(1), 1000)
 ```
 # React
 ## Fiber Architecture
 https://github.com/acdlite/react-fiber-architecture
 
 ## Diff 算法
-https://juejin.cn/post/7204285137046782012#heading-9
-
 https://juejin.cn/post/7131741751152214030
+
+https://vue3js.cn/interview/React/diff.html#%E4%B8%80%E3%80%81%E6%98%AF%E4%BB%80%E4%B9%88
+
 ## React diff如何从 O(3)优化到 O(n)
 React 和 Vue 做的假设是：
 
@@ -1836,6 +1915,33 @@ https://github.com/reactwg/react-18/discussions/21
 
 ## hooks原理
 
+### useEffect
+
+```js
+function useEffect(cb, deps) {
+      const hooks = wipFiber.hooks; 
+    
+      // getting older dependencies from the hooks array since 
+      // we are storing dependencies as a sub-array inside the hooks array
+      let oldDeps = hooks[index];
+    
+      // if no dependencies are provided, 
+      // the callback function will be called at each re-render
+      let hasChanged = true;    
+    
+      if (oldDeps) {
+        // checking if the old dependencies are different from older dependencies
+        hasChanged = deps.some((d, index) => !Object.is(d, oldDeps[index]));
+      }
+      if (hasChanged) cb();   // if dependencies has changed call the callback function.
+    
+      hooks[index] = deps;    //store dependencies inside the hooks array as a sub-array
+      index++;    // increment index for any other useEffect calls
+  } 
+```
+
+
+
 ### 为什么hoos不能写在if里
 
 hooks在FIber节点上是数组加链表， 按顺序维护， 执行一个hook index++，如果某些hook没有执行，顺序会被打乱
@@ -1850,13 +1956,32 @@ hooks在FIber节点上是数组加链表， 按顺序维护， 执行一个hook 
 
 ## Scheduler
 [ Scheduler 为什么使用 MessageChannel 实现](https://juejin.cn/post/6953804914715803678)
-## React serverComponent 和 SSR区别
+## serverComponent 和 SSR区别
 1.  SSR返回的是一个Html，而React Server Component返回的是一个React可解析的结构。
 2.  SSR返回的页面会让页面重新刷新，丢失掉之前页面上的状态，比如表单选中之类的；而React Server Component返回的并不会让页面重新刷新而丢失状态。
 ## NEXT js
 ### ISR原理
 SWR
-- [[计算机网络#stale while revalidate]]
+
+## Redux
+
+Redux 是一种用于管理应用程序状态的状态管理库。它提供了一种可预测的状态管理机制，使得应用程序的状态变化变得可控和可追踪。Redux 的核心思想是将应用程序的状态存储在一个单一的全局状态树中，通过定义纯粹的函数来处理状态的变化。
+
+以下是 Redux 的主要作用和使用场景：
+
+1. **集中式状态管理：** Redux 提供了一个集中式的存储机制，使得应用程序的状态可以被统一管理。这样，不同组件之间可以共享相同的状态，并且可以方便地进行状态的读取和更新。
+2. **可预测的状态变化：** Redux 使用纯粹的函数来处理状态的变化，称为"reducer"。Reducer 接收先前的状态和一个动作(action)，返回一个新的状态。这种方式使得状态变化成为可预测的，因为相同的输入将始终产生相同的输出。
+3. **时间旅行调试：** Redux 提供了时间旅行调试的能力，即可以回溯和检查应用程序在不同时间点的状态。这对于调试和排查问题非常有帮助，可以追踪每个动作对状态的影响，以及发生错误的原因。
+4. **中间件扩展：** Redux 支持使用中间件来扩展其功能。中间件可以在动作被派发到 reducer 前后进行拦截和处理。这使得开发者可以在 Redux 中实现各种功能，如异步操作、日志记录、错误处理等。
+
+Redux 在以下场景中特别有用：
+
+- **大型应用程序：** 当应用程序变得复杂，有多个组件之间需要共享状态和数据时，Redux 提供了一种可靠的方式来管理和更新状态，确保数据的一致性和可维护性。
+- **跨组件通信：** 当组件之间需要共享数据或进行通信时，Redux 提供了一种中心化的状态管理方案，方便组件之间的数据传递和更新。
+- **异步数据处理：** Redux 配合中间件（如 Redux Thunk、Redux Saga）可以很好地处理异步操作，如发送网络请求、处理数据流等。
+- **状态回溯和调试：** Redux 的时间旅行调试功能使得开发者可以追踪和检查应用程序在不同时间点的状态，方便调试和排查问题。
+
+虽然 Redux 可以应用于各种类型的应用程序，但对于简单的小型应用程序，使用 React 的本地状态管理可能更为简单和适合。
 
 # Git
 
@@ -1875,7 +2000,18 @@ SWR
 
 `git revert` revert仅仅是撤销指定commit的修改，并不影响后续的commit，但所撤销的commit被后续的commit修改了同一地方则会产生冲突；
 
+
+
+## merge
+
+![Merging master into the feature branch](https://wac-cdn.atlassian.com/dam/jcr:4639eeb8-e417-434a-a3f8-a972277fc66a/02%20Merging%20main%20into%20the%20feature%20branh.svg?cdnVersion=1050 https://wac-cdn.atlassian.com/dam/jcr:3bafddf5-fd55-4320-9310-3d28f4fca3af/03%20Rebasing%20the%20feature%20branch%20into%20main.svg?cdnVersion=1050 )
+
 ## rebase
+
+![](https://wac-cdn.atlassian.com/dam/jcr:3bafddf5-fd55-4320-9310-3d28f4fca3af/03%20Rebasing%20the%20feature%20branch%20into%20main.svg?cdnVersion=1050)
+
+
+
 Git rebase 是一个常用的 Git 命令，它可以将一个分支的提交记录（包括提交信息、作者、时间等）应用到另一个分支上。除了合并分支，git rebase 还有以下作用：
 
 1.  整理提交历史
@@ -1942,3 +2078,19 @@ window.addEventListener('scroll', function() {
   });
 });
 ```
+
+
+
+## 设计toast组件
+
+两种控制渲染方式
+
+- 全局context组件负责渲染
+- 单独`isDisplay`状态控制渲染
+
+```tsx
+const toast = ({message, duration, onClose})=>{
+  ...
+}
+```
+
