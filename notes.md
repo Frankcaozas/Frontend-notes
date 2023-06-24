@@ -89,6 +89,8 @@ TCP 建立连接时，通过三次握手**能防止历史连接的建立，能�
 
 ### 为什么time-wait要等待2MSL
 
+`MSL` 是 Maximum Segment Lifetime，**报文最大生存时间**
+
 1. `确保完全关闭连接`：TIME_WAIT状态的等待时间是为了确保网络中所有的报文段都被接收和处理完毕。在关闭连接后，可能仍然有之前的报文段在网络中延迟到达，如果立即关闭连接，这些延迟到达的报文段可能会被后续的连接误认为是属于当前连接的报文，从而导致数据混乱或错误。
 2. `避免旧连接的报文与新连接重叠`：TIME_WAIT状态还可以避免旧连接的报文与新连接重叠。TCP协议使用端口号来标识连接，而端口号在一段时间后才能被重复使用。等待2倍的MSL时间可以确保旧连接的所有报文都被网络丢弃，使得相同端口号可以安全地用于新的连接。
 
@@ -603,6 +605,7 @@ HTML5 引入了一些新的语义化标签，这些标签旨在更好地描述�
  <noscript>    // 定义在脚本未被执行时的替代内容
  <ol>     // 定义有序列表
  <ul>    // 定义无序列表
+ <li></li>
  <p>     // 标签定义段落
  <pre>     // 定义预格式化的文本
  <table>     // 标签定义 HTML 表格
@@ -946,6 +949,7 @@ hash
 # CSS 
 ## 原子化css
 [重新构想原子化](https://antfu.me/posts/reimagine-atomic-css-zh)
+
 ## 盒模型
 CSS 的盒模型主要包括以下两种，可通过 [box-sizing](https://developer.mozilla.org/zh-CN/docs/Web/CSS/box-sizing) 属性进行配置：
 -   `content-box`：默认属性。width 只包含 content
@@ -1164,6 +1168,9 @@ display:none会将元素从页面中完全移除，不占据任何空间；visib
 -   undefined
 -   symbol
 -   null
+
+`es6` : `bigint symbol`
+
 ## pnpm
 ### 好处
 -   幽灵依赖解决 
@@ -1601,7 +1608,17 @@ const myPromiseSettled = (items) => {
   );
 };
 ```
+```js
+function myPromiseSettled(promises){
+  const onres = (value)=>({status: 'fufilled'}, value)
+  const onrej = (reason)=>({status: 'rejected'}, reason)
+}
+```
+
+
+
 ### race
+
 ```js
 const promiseRace = (promises) => {
   return new Promise((resolve, reject) => {
@@ -1637,7 +1654,61 @@ const map = function (items, fn, concurrency = Infinity) {
   })
 }
 ```
+
+
+### retry
+
+```js
+function retry(promiseFn, retries = 3, delay = 1000) {
+  return new Promise((resolve, reject) => {
+    const attempt = (attemptNumber) => {
+      promiseFn()
+        .then(resolve)
+        .catch(error => {
+          if (attemptNumber >= retries) {
+            reject(error);
+          } else {
+            setTimeout(() => {
+              attempt(attemptNumber + 1);
+            }, delay);
+          }
+        });
+    };
+
+    attempt(1);
+  });
+}
+```
+
+### some
+
+```js
+//返回前cnt个resolve的promise的结果， 个数不够reject
+function some(promises, cnt) {
+  return new Promise((resvolve, reject) => {
+    const result = []
+    let excuteCnt = 0
+    for (let i = 0; i < promises; i++) {
+      Promise.resolve(promises[i])
+        .then((val) => {
+          if (result.length < cnt) result.push(val)
+          excuteCnt++
+          if (result.length === cnt) resvolve(result)
+          else if (excuteCnt === cnt) reject()
+        })
+        .catch((e) => {
+          excuteCnt++
+          if (excuteCnt === cnt) reject()
+        })
+    }
+  })
+}
+```
+
+
+
 ## Array
+
 ### isArray
 ```js
 const isArray = Array.isArray || list => ({}).toString.call(list) === '[object Array]'
@@ -2038,9 +2109,12 @@ Git rebase 是一个常用的 Git 命令，它可以将一个分支的提交记�
 - cdn
 
 ## 性能
-打包方面：外部引入，cdn，懒加载与代码分割，代码减小体积，
 
-代码方面：防抖节流，虚拟滚动，ssr服务端渲染
+缓存
+
+打包方面：外部引入，cdn，代码分割，代码减小体积，压缩文件 图片，合并静态资源减少http请求
+
+代码方面：防抖节流，虚拟滚动，ssr服务端渲染 懒加载
 
 部署方面：开启http2，开启gzip压缩
 
@@ -2092,5 +2166,41 @@ window.addEventListener('scroll', function() {
 const toast = ({message, duration, onClose})=>{
   ...
 }
+```
+
+# 看代码说答案
+
+## this
+
+```js
+const length = 10
+const fn = function () {
+    return this.length + 1
+}
+const obj = {
+    length: 5,
+    test: function () {
+        return fn()
+    }
+
+}
+//下面输出是什么？
+console.log(obj.test())
+// browser 1 window.length是当前 frame 和 iframe 数量
+// const let 的变量不在window上面
+```
+
+
+
+
+
+```js
+var a = function(){this.b = 3}
+c = new a()
+a.prototype.b = 9
+var b = 7
+a()
+console.log(b)//3
+console.log(c.b)//3
 ```
 
