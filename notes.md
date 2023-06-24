@@ -2204,3 +2204,8 @@ console.log(b)//3
 console.log(c.b)//3
 ```
 
+# others
+
+## oauth2
+
+[阮一峰oauth2](https://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html)
