@@ -698,7 +698,6 @@ HTML5 引入了一些新的语义化标签，这些标签旨在更好地描述�
 <textarea> 
 <select> 
 <img>
-
 ```
 
 #### 4. 元素类型转换 display
@@ -842,7 +841,7 @@ export default function App() {
         onChange={(e) => {
           console.log("Event: ", e);
           console.log("NativeEvent: ", e.nativeEvent);
-          console.log("CurrentTarget: ", e.nativeEvent.currentTarget);
+          console.log("CurrentTarget: ", e.nativeEvent.currentTarget); //<div id="root"></div> 委托的节点
           console.log("NativeEvent Type: ", e.nativeEvent.type);
         }}
       />
@@ -1394,6 +1393,17 @@ myDog.bark();    // 输出: Woof!
 在上述示例中，通过将子类的原型对象设置为父类的一个实例（通过 `Object.create()` 方法），子类就能继承父类的原型属性和方法。然后，为了修复子类的构造函数引用，我们将 `prototype.constructor` 设置为子类本身。
 
 如果不手动修复 `prototype.constructor`，它将指向父类的构造函数。这意味着当你尝试创建子类实例时，实际上会调用父类的构造函数来创建一个父类实例，而不是子类实例。这通常会导致错误的行为和预期之外的结果。因此，为了确保正确的继承关系，我们需要手动修复 `prototype.constructor`。
+
+## Function和Object的关系
+
+```js
+Function.prototype = Function._proto_ (内置函数)
+
+Object.prototype = Function.prototype._proto_ (根源对象)
+```
+
+
+
 ## 事件循环
 Js异步、事件循环与消息队列、微任务与宏任务
 [https://zhuanlan.zhihu.com/p/139967525](https://zhuanlan.zhihu.com/p/139967525)
