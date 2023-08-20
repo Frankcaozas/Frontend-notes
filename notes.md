@@ -1950,7 +1950,7 @@ function getQueryParam(url) {
 ```ts
 function curry(fn, ...args) {
   //fn.length 参数的个数
-  return fn.length <= args.length ? fn(...args) : curry.bind(null,fn, ...args)
+  return fn.length <= args.length ? fn(...args) : curry.bnd(null,fn, ...args)
 }
 ```
 ## new
